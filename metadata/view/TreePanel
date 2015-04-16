@@ -1,0 +1,92 @@
+{
+    "type": "Ext.tree.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "treepanel",
+        "designer|userClassName": "TreePanel",
+        "itemId": "menuPanel",
+        "store": "MenuStore",
+        "title": "Panel",
+        "width": 231
+    },
+    "name": "MyTreePanel",
+    "designerId": "4637c71b-4b07-4e2e-9a8f-b46306301fff",
+    "viewControllerInstanceId": "34e4a2a8-57a5-45c3-9e8e-0d08c0f22958",
+    "viewModelInstanceId": "64c7267a-7aba-4f54-8fcd-2bb1998696d8",
+    "cn": [
+        {
+            "type": "Ext.tree.View",
+            "reference": {
+                "name": "viewConfig",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "itemId": "treeMenu",
+                "width": null
+            },
+            "name": "MyTreeView",
+            "designerId": "a6ea9d5f-6bcb-41f3-88ea-8e374f1c8114",
+            "cn": [
+                {
+                    "type": "viewcontrollereventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onTreeMenuAfterRender",
+                        "implHandler": [
+                            "var ghUtil = Ext.create('SD.view.GitHubWrapper', {});",
+                            "",
+                            "var github = ghUtil.getInstance(\"d226b4e3bd6447b29da96c5120420f71baf4817d\");",
+                            "",
+                            "ghUtil.getRepo('ajit-kumar-azad', 'slidedeck');",
+                            "",
+                            "ghUtil.getTree('master');",
+                            "",
+                            "var html = \"<iframe height='268' scrolling='no' src='http://codepen.io/ajit-kumar-azad/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/ajit-kumar-azad/pen/{hash}/'>{hash}</a> by Ajit Kumar (<a href='http://codepen.io/ajit-kumar-azad'>@ajit-kumar-azad</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>\";",
+                            "var tpl =  Ext.dom.Helper.createTemplate(html);",
+                            "",
+                            "ghUtil.getFileContent('master', \"README.md\", function(err, data) {",
+                            "",
+                            "    console.log('DATA: ', data);",
+                            "    ",
+                            "//     debugger;    ",
+                            "    ",
+                            "    var el = Ext.dom.Helper.createDom(data);",
+                            "    ",
+                            "    var domEl = Ext.get(el);",
+                            "//     var hash = Ext.dom.Query.selectNode('code', domEl);",
+                            "    var hash = domEl.getAttribute('data-slug-hash');",
+                            "    ",
+                            "    console.log('CODE: ', hash);",
+                            "    ",
+                            "    Ext.getCmp('content-pnl').setHtml(data);",
+                            "    ",
+                            "    var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');",
+                            "    for (var i = 0; i < elArr.length; i++) {",
+                            "        el = elArr[i];",
+                            "    console.log('HASH: ', Ext.get(el).getAttribute('text'));",
+                            "    ",
+                            "    console.log('EL: ', Ext.get(el).parent());",
+                            "    ",
+                            "    tpl.overwrite(Ext.get(el).parent(), {hash: Ext.get(el).getAttribute('text')});",
+                            "    }",
+                            "});"
+                        ],
+                        "name": "afterrender",
+                        "scope": "me"
+                    },
+                    "name": "onTreeMenuAfterRender",
+                    "designerId": "c6176404-7d16-4487-acea-e9af6998457c"
+                }
+            ]
+        }
+    ]
+}

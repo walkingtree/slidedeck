@@ -1,0 +1,17 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "defer": false,
+        "designer|userClassName": "js_wmypl560",
+        "id": "github.js",
+        "url": "lib/github.js",
+        "x-compile": true
+    },
+    "name": "js",
+    "designerId": "7e7e7dd0-b242-421f-99b3-a0571d50c033"
+}

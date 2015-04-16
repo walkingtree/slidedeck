@@ -1,0 +1,23 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "contentpanel",
+        "designer|userClassName": "ContentPanel",
+        "id": "content-pnl",
+        "itemId": "contentPanel",
+        "scrollable": true,
+        "title": "Content"
+    },
+    "name": "MyPanel2",
+    "configAlternates": {
+        "scrollable": "boolean"
+    },
+    "designerId": "44f3d44e-7b24-4f92-b359-bc61304764d9",
+    "viewControllerInstanceId": "d7ac53db-781c-494a-a078-27826463904d",
+    "viewModelInstanceId": "ae85f05b-33a0-4789-a035-3cc8e1487921"
+}

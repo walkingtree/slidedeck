@@ -1,0 +1,21 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "name": "SD",
+        "stores": [
+            "MenuStore"
+        ],
+        "views": [
+            "MyViewport",
+            "TreePanel",
+            "ContentPanel"
+        ]
+    },
+    "name": "Application",
+    "designerId": "application"
+}

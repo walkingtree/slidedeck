@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "treepanel",
+        "designer|userClassName": "TreePanelViewModel"
+    },
+    "designerId": "64c7267a-7aba-4f54-8fcd-2bb1998696d8"
+}

@@ -1,0 +1,130 @@
+{
+    "type": "class",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "GitHubWrapper",
+        "github": [
+            "null"
+        ],
+        "repo": [
+            "null"
+        ]
+    },
+    "name": "MyClass",
+    "configAlternates": {
+        "github": "object",
+        "repo": "object"
+    },
+    "designerId": "153f6525-f116-4029-949d-7e9606db25d5",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "repo",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "github",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "branchname"
+                ],
+                "fn": "getTree",
+                "implHandler": [
+                    "this.repo.getTree(branchname + '?recursive=true', function(err, tree) {",
+                    "// this.repo.getTree(branchname, function(err, tree) {",
+                    "",
+                    "    console.log('TREE: ', err, tree);",
+                    "});"
+                ]
+            },
+            "name": "getTree",
+            "designerId": "3e4bc5be-ecf5-4994-89a9-c8ec14521924"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "username",
+                    "reponame"
+                ],
+                "fn": "getRepo",
+                "implHandler": [
+                    "this.repo = this.github.getRepo(username, reponame);",
+                    "",
+                    "this.repo.show(function(err, repo) {",
+                    "    console.log('REPO: ', err, repo);",
+                    "    ",
+                    "});"
+                ]
+            },
+            "name": "getRepo",
+            "designerId": "67882dee-e9a8-47bd-8e54-83c3a07957c7"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "token"
+                ],
+                "fn": "getInstance",
+                "implHandler": [
+                    "this.github = new Github({",
+                    "  token: token,",
+                    "  auth: \"oauth\"",
+                    "});",
+                    "",
+                    "return this.github;"
+                ]
+            },
+            "name": "getInstance",
+            "designerId": "e5a92c73-61f8-4e62-981e-1c88fa609c47"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "branchname",
+                    "path",
+                    "cb"
+                ],
+                "fn": "getFileContent",
+                "implHandler": [
+                    "this.repo.read(branchname, path, cb);"
+                ]
+            },
+            "name": "getFileContent",
+            "designerId": "51293534-6a45-499c-abac-c2e9ac5f77ab"
+        }
+    ]
+}
