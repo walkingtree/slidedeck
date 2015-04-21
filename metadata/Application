@@ -7,6 +7,9 @@
     "codeClass": null,
     "userConfig": {
         "name": "SD",
+        "requires": [
+            "wtc.ux.plugin.TreeSearch"
+        ],
         "stores": [
             "MenuStore"
         ],

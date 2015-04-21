@@ -1,0 +1,16 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "defer": false,
+        "designer|userClassName": "js_la1cu4u9",
+        "url": "./wtc/ux/plugin/TreeSearch.js",
+        "x-compile": true
+    },
+    "name": "js1",
+    "designerId": "bc23fb7a-b648-4f47-8ada-a9074286a31a"
+}

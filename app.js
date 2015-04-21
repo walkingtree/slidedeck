@@ -20,6 +20,10 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
+
+    requires: [
+        'wtc.ux.plugin.TreeSearch'
+    ],
     stores: [
         'MenuStore'
     ],

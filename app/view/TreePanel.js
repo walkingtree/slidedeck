@@ -20,6 +20,7 @@ Ext.define('SD.view.TreePanel', {
     requires: [
         'SD.view.TreePanelViewModel',
         'SD.view.TreePanelViewController',
+        'SD.view.override.TreePanel',
         'Ext.tree.View'
     ],
 
@@ -28,14 +29,15 @@ Ext.define('SD.view.TreePanel', {
         type: 'treepanel'
     },
     itemId: 'menuPanel',
-    width: 231,
+    width: 360,
     title: 'Panel',
     store: 'MenuStore',
 
     viewConfig: {
         itemId: 'treeMenu',
         listeners: {
-            afterrender: 'onTreeMenuAfterRender'
+            beforerender: 'onTreeMenuBeforeRender',
+            itemclick: 'onTreeLeafItemClick'
         }
     }
 

@@ -26,8 +26,7 @@ Ext.define('SD.store.MenuStore', {
         me.callParent([Ext.apply({
             storeId: 'MyTreeStore',
             root: {
-                expanded: true,
-                text: 'Topics'
+                expanded: true
             },
             fields: [
                 {
