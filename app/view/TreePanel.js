@@ -37,7 +37,8 @@ Ext.define('SD.view.TreePanel', {
         itemId: 'treeMenu',
         listeners: {
             beforerender: 'onTreeMenuBeforeRender',
-            itemclick: 'onTreeLeafItemClick'
+            itemclick: 'onTreeLeafItemClick',
+            render: 'onTreeMenuRender'
         }
     }
 

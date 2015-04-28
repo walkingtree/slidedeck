@@ -1,0 +1,16 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "defer": false,
+        "designer|userClassName": "js_ffqxpjhg",
+        "url": "app/util/GitInstance.js",
+        "x-compile": true
+    },
+    "name": "js2",
+    "designerId": "c9a36bb6-1d25-4ee3-8dc6-a44d9d7b42db"
+}

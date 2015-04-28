@@ -16,67 +16,15 @@
 Ext.define('SD.view.GitHubWrapper', {
     extend: 'Ext.Base',
 
-    repo: null,
-    github: null,
-
     getTree: function(branchname, callback) {
-        this.repo.getTree(branchname + '?recursive=true', function(err, tree) {
-        // this.repo.getTree(branchname, function(err, tree) {
-
-            console.log('TREE: ', err, tree);
-            var treeData = [];
-            var treeLength =  tree.length;
-
-            for(var i=0;i< treeLength;i++){
-
-                var nodePath = tree[i].path;
-                var nodeType = tree[i].type;
-                var leafNodeText = nodePath.split('\\').pop().split('/').pop();
-
-                if(nodeType === "tree"){
-
-                    var pathArray = nodePath.split('/');
-                    if(pathArray.length === 1){
-
-                        Ext.Array.include(treeData,{ text: nodePath,path:nodePath,expanded: true,children:[]});
-                    }else{
-
-                        var parentTree = treeData,key="";
-                        for(var p = pathArray.length - 2; p > 0; p--){
-
-                                key = key + "children[0].";
-                         }
-                        var childNode = eval("parentTree[0]." + key + "children");
-                        Ext.Array.include(childNode,{ text: leafNodeText,path:nodePath,expanded: true,children:[]});
-                     }
-                }else if(nodeType === "blob"){
-
-
-                     var pathVar = nodePath.split('/');
-
-                    if(pathVar.length > 1){
-
-                         var parentNode = treeData;
-                         for(var x=0; x<pathVar.length-1; x++){
-
-                              var parentNode1 = Ext.Array.pluck(parentNode,'text');
-
-                              var indexValue = Ext.Array.indexOf(parentNode1,pathVar[x]);
-                              var childs = parentNode[indexValue].children;
-                              parentNode = childs;
-
-                              if(pathVar.length -2 === x){
-                                 Ext.Array.include(childs,{ text: leafNodeText,path:nodePath,leaf :true});
-                              }
-                         }
-                    }else{
-                        // Root node with type blob
-                        Ext.Array.include(treeData,{ text: leafNodeText,path:nodePath,leaf :true });
-                    }
-                }
-            }
-            callback(treeData);
+        var me=this;
+        var repo=SD.util.GitInstance.getRepository();
+        repo.getTree(branchname + '?recursive=true', function(err, tree) {
+             var obj=me.explodeTree(tree,'/');
+             me.data=tree;
+             callback(obj);
         });
+
     },
 
     getRepo: function(username, reponame) {
@@ -98,7 +46,84 @@ Ext.define('SD.view.GitHubWrapper', {
     },
 
     getFileContent: function(branchname, path, cb) {
-        this.repo.read(branchname, path, cb);
+        var repo=SD.util.GitInstance.getRepository();
+        repo.read(branchname, path, cb);
+    },
+
+    explodeTree: function(files, del) {
+        var obj= this.processChildren(files, del);
+               return obj;
+    },
+
+    processChildren: function(files, del) {
+         var obj = this.dissectFiles(files, del);
+               obj = this.parseDirs(obj);
+                   for ( var i=0;i<obj.length;i++ ) {
+                       var node = obj[i];
+                       if ( node.type === 'tree' ) {
+                           obj[i].children = this.processChildren(obj[i].children, del);
+                       }
+                   }
+                   return obj;
+    },
+
+    dissectFiles: function(files, del) {
+        var obj = [];
+        files.map(function (file) {
+           if(!file.blobpath){
+               file.blobpath=file.path;
+           }
+
+           var node,fileT,path;
+           if(file.split){
+               fileT = file.split(del);
+           }else{
+               if(file.path.split){
+                   fileT=file.path.split(del);
+               }
+           }
+           if ( fileT.length > 1 ) {
+               path = fileT.shift();
+               node = {type: 'tree',path: path,text:path,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
+           } else {
+               var type='blob';
+               var text=fileT.join(del);
+               path=fileT.join(del);
+               var child=[];
+               var leaf=true;
+               if(file.type=="blob"){
+                   leaf=true;
+                   type='blob';
+               }
+               if(file.type=="tree"){
+                   leaf=false;
+                   type="tree";
+               }
+               node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:text,children:child,expanded:true};
+           }
+           obj.push(node);
+        });
+        return obj;
+
+    },
+
+    parseDirs: function(obj) {
+        var dirs = {};
+                   for ( var i=0;i<obj.length;i++ ) {
+                       var node = obj[i];
+                       var process = false;
+                       if ( node.type === 'tree' ) {
+                           var path = node.path;
+                           if ( dirs[path] === undefined ) {
+                               dirs[path] = i;
+                           } else {
+                               obj[dirs[path]].children = obj[dirs[path]].children.concat(obj[i].children);
+                               obj.splice(i,1);
+                               i--;
+                           }
+                       }
+                   }
+                   return obj;
     }
 
 });

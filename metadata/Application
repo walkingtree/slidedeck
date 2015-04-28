@@ -8,7 +8,8 @@
     "userConfig": {
         "name": "SD",
         "requires": [
-            "wtc.ux.plugin.TreeSearch"
+            "wtc.ux.plugin.TreeSearch",
+            "SD.util.GitInstance"
         ],
         "stores": [
             "MenuStore"

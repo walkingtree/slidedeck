@@ -1,7 +1,7 @@
 {
    "name": "SD",
    "indexHtmlPath": "index.html",
-   "classpath": "${app.dir}/app,${app.dir}/lib/,${app.dir}/./wtc/ux/plugin/",
+   "classpath": "${app.dir}/app,${app.dir}/lib/,${app.dir}/./wtc/ux/plugin/,${app.dir}/app/util/",
    "overrides": "${app.dir}/overrides",
    "framework": "ext",
    "theme": "ext-theme-crisp-e3d6823b-ee55-4b48-b149-3df5a94e598b",
@@ -23,6 +23,10 @@
       },
       {
          "path": "./wtc/ux/plugin/TreeSearch.js",
+         "x-compile": true
+      },
+      {
+         "path": "app/util/GitInstance.js",
          "x-compile": true
       },
       {

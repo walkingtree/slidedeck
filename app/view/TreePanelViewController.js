@@ -18,20 +18,13 @@ Ext.define('SD.view.TreePanelViewController', {
     alias: 'controller.treepanel',
 
     onTreeMenuBeforeRender: function(component, eOpts) {
+        component.setLoading(true);
         var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
-
-        //var github = ghUtil.getInstance("d226b4e3bd6447b29da96c5120420f71baf4817d");
-        var github = ghUtil.getInstance("a4a5d22707f8a9b42358b0c0a13d84db1f7e3783");
-
-        //ghUtil.getRepo('ajit-kumar-azad', 'slidedeck');
-        ghUtil.getRepo('ranjit-battewad', 'testapp');
-
         var treeData = ghUtil.getTree('master',function(tree,component){
-
-
             var treePnl =   Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
             var st = treePnl.getStore();
             treePnl.getRootNode().appendChild(tree);
+
         });
     },
 
@@ -42,10 +35,10 @@ Ext.define('SD.view.TreePanelViewController', {
 
             Ext.getCmp('content-pnl').mask('loading');
 
-            var path = record.data.path;
+            var path = record.data.blobpath;
             var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
-            var github = ghUtil.getInstance("a4a5d22707f8a9b42358b0c0a13d84db1f7e3783");
-            ghUtil.getRepo('ranjit-battewad', 'testapp');
+            //var github = ghUtil.getInstance("a4a5d22707f8a9b42358b0c0a13d84db1f7e3783");
+            //ghUtil.getRepo('ranjit-battewad', 'testapp');
             var html = "<iframe height='268' scrolling='no' src='http://codepen.io/ajit-kumar-azad/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/ajit-kumar-azad/pen/{hash}/'>{hash}</a> by Ajit Kumar (<a href='http://codepen.io/ajit-kumar-azad'>@ajit-kumar-azad</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
             var tpl =  Ext.dom.Helper.createTemplate(html);
             ghUtil.getFileContent('master', path, function(err, data) {
@@ -58,7 +51,7 @@ Ext.define('SD.view.TreePanelViewController', {
 
                 console.log('CODE: ', hash);
                 Ext.getCmp('content-pnl').setHtml(data);
-
+                debugger;
                 var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');
                 for (var i = 0; i < elArr.length; i++) {
                     el = elArr[i];
@@ -73,6 +66,10 @@ Ext.define('SD.view.TreePanelViewController', {
         }
 
 
+    },
+
+    onTreeMenuRender: function(component, eOpts) {
+        component.setLoading(false);
     }
 
 });

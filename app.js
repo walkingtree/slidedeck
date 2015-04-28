@@ -22,7 +22,8 @@ Ext.Loader.setConfig({
 Ext.application({
 
     requires: [
-        'wtc.ux.plugin.TreeSearch'
+        'wtc.ux.plugin.TreeSearch',
+        'SD.util.GitInstance'
     ],
     stores: [
         'MenuStore'

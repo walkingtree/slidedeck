@@ -6,13 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|userClassName": "GitHubWrapper",
-        "github": [
-            "null"
-        ],
-        "repo": [
-            "null"
-        ]
+        "designer|userClassName": "GitHubWrapper"
     },
     "name": "MyClass",
     "configAlternates": {
@@ -21,18 +15,6 @@
         "treeData": "array"
     },
     "designerId": "153f6525-f116-4029-949d-7e9606db25d5",
-    "customConfigs": [
-        {
-            "group": "(Custom Properties)",
-            "name": "repo",
-            "type": "string"
-        },
-        {
-            "group": "(Custom Properties)",
-            "name": "github",
-            "type": "string"
-        }
-    ],
     "cn": [
         {
             "type": "basicfunction",
@@ -48,63 +30,14 @@
                 ],
                 "fn": "getTree",
                 "implHandler": [
-                    "this.repo.getTree(branchname + '?recursive=true', function(err, tree) {",
-                    "// this.repo.getTree(branchname, function(err, tree) {",
-                    "",
-                    "    console.log('TREE: ', err, tree);",
-                    "    var treeData = [];",
-                    "    var treeLength =  tree.length;",
-                    "",
-                    "    for(var i=0;i< treeLength;i++){",
-                    "",
-                    "        var nodePath = tree[i].path;",
-                    "        var nodeType = tree[i].type;",
-                    "        var leafNodeText = nodePath.split('\\\\').pop().split('/').pop();",
-                    "",
-                    "        if(nodeType === \"tree\"){",
-                    "",
-                    "            var pathArray = nodePath.split('/');",
-                    "            if(pathArray.length === 1){",
-                    "",
-                    "                Ext.Array.include(treeData,{ text: nodePath,path:nodePath,expanded: true,children:[]});",
-                    "            }else{",
-                    "",
-                    "                var parentTree = treeData,key=\"\";",
-                    "                for(var p = pathArray.length - 2; p > 0; p--){",
-                    "",
-                    "                        key = key + \"children[0].\";",
-                    "                 }",
-                    "                var childNode = eval(\"parentTree[0].\" + key + \"children\");",
-                    "                Ext.Array.include(childNode,{ text: leafNodeText,path:nodePath,expanded: true,children:[]});",
-                    "             }",
-                    "        }else if(nodeType === \"blob\"){",
-                    "",
-                    "",
-                    "             var pathVar = nodePath.split('/');",
-                    "",
-                    "            if(pathVar.length > 1){",
-                    "",
-                    "                 var parentNode = treeData;",
-                    "                 for(var x=0; x<pathVar.length-1; x++){",
-                    "",
-                    "                      var parentNode1 = Ext.Array.pluck(parentNode,'text');",
-                    "",
-                    "                      var indexValue = Ext.Array.indexOf(parentNode1,pathVar[x]);",
-                    "                      var childs = parentNode[indexValue].children;",
-                    "                      parentNode = childs;",
-                    "",
-                    "                      if(pathVar.length -2 === x){",
-                    "                         Ext.Array.include(childs,{ text: leafNodeText,path:nodePath,leaf :true});",
-                    "                      }",
-                    "                 }",
-                    "            }else{",
-                    "                // Root node with type blob",
-                    "                Ext.Array.include(treeData,{ text: leafNodeText,path:nodePath,leaf :true });",
-                    "            }",
-                    "        }",
-                    "    }",
-                    "    callback(treeData);",
-                    "});"
+                    "var me=this;",
+                    "var repo=SD.util.GitInstance.getRepository();",
+                    "repo.getTree(branchname + '?recursive=true', function(err, tree) {",
+                    "     var obj=me.explodeTree(tree,'/');",
+                    "     me.data=tree;",
+                    "     callback(obj);",
+                    "});",
+                    ""
                 ]
             },
             "name": "getTree",
@@ -174,11 +107,151 @@
                 ],
                 "fn": "getFileContent",
                 "implHandler": [
-                    "this.repo.read(branchname, path, cb);"
+                    "var repo=SD.util.GitInstance.getRepository();",
+                    "repo.read(branchname, path, cb);"
                 ]
             },
             "name": "getFileContent",
             "designerId": "51293534-6a45-499c-abac-c2e9ac5f77ab"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "files",
+                    "del"
+                ],
+                "fn": "explodeTree",
+                "implHandler": [
+                    "var obj= this.processChildren(files, del);",
+                    "       return obj;"
+                ]
+            },
+            "name": "explodeTree",
+            "designerId": "b25ae4cb-ef87-4a68-8bfb-6e37208bf044"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "files",
+                    "del"
+                ],
+                "fn": "processChildren",
+                "implHandler": [
+                    " var obj = this.dissectFiles(files, del);",
+                    "       obj = this.parseDirs(obj);",
+                    "           for ( var i=0;i<obj.length;i++ ) {",
+                    "               var node = obj[i];",
+                    "               if ( node.type === 'tree' ) {",
+                    "                   obj[i].children = this.processChildren(obj[i].children, del);",
+                    "               }",
+                    "           }",
+                    "           return obj;"
+                ]
+            },
+            "name": "processChildren",
+            "designerId": "44b3d55e-28a3-45ce-84b3-3f455de156b2"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "files",
+                    "del"
+                ],
+                "fn": "dissectFiles",
+                "implHandler": [
+                    "var obj = [];",
+                    "files.map(function (file) {",
+                    "   if(!file.blobpath){",
+                    "       file.blobpath=file.path;",
+                    "   }",
+                    "   ",
+                    "   var node,fileT,path;",
+                    "   if(file.split){",
+                    "       fileT = file.split(del);",
+                    "   }else{",
+                    "       if(file.path.split){",
+                    "           fileT=file.path.split(del);",
+                    "       }",
+                    "   }",
+                    "   if ( fileT.length > 1 ) {",
+                    "       path = fileT.shift();",
+                    "       node = {type: 'tree',path: path,text:path,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};",
+                    "   } else {",
+                    "       var type='blob';",
+                    "       var text=fileT.join(del);",
+                    "       path=fileT.join(del);",
+                    "       var child=[];",
+                    "       var leaf=true;",
+                    "       if(file.type==\"blob\"){",
+                    "           leaf=true;",
+                    "           type='blob';",
+                    "       }",
+                    "       if(file.type==\"tree\"){",
+                    "           leaf=false;",
+                    "           type=\"tree\";",
+                    "       }",
+                    "       node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:text,children:child,expanded:true};",
+                    "   }",
+                    "   obj.push(node);",
+                    "});",
+                    "return obj;",
+                    ""
+                ]
+            },
+            "name": "dissectFiles",
+            "designerId": "45a17df1-d4d6-4195-b4e2-ef0ca45e4d05"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "obj"
+                ],
+                "fn": "parseDirs",
+                "implHandler": [
+                    "var dirs = {};",
+                    "           for ( var i=0;i<obj.length;i++ ) {",
+                    "               var node = obj[i];",
+                    "               var process = false;",
+                    "               if ( node.type === 'tree' ) {",
+                    "                   var path = node.path;",
+                    "                   if ( dirs[path] === undefined ) {",
+                    "                       dirs[path] = i;",
+                    "                   } else {",
+                    "                       obj[dirs[path]].children = obj[dirs[path]].children.concat(obj[i].children);",
+                    "                       obj.splice(i,1);",
+                    "                       i--;",
+                    "                   }",
+                    "               }",
+                    "           }",
+                    "           return obj;"
+                ]
+            },
+            "name": "parseDirs",
+            "designerId": "5fd6bc5f-1341-4a6e-b0c2-8def956f663f"
         }
     ]
 }
