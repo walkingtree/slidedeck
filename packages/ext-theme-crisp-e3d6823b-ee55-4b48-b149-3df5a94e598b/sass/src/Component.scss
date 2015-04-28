@@ -1,9 +1,18 @@
 .collapseall {
-    background: url("images/check-all.png") no-repeat !important;	
+    background: url("images/check-all.png") no-repeat !important;
 }
 .expandall {
     background: url("images/tree-expandall.png") no-repeat !important;
 }
 .searchFiledRadious .x-form-text {
     border-radius: 10px !important;
+}
+
+.searchitem-highlight-cls{
+
+    background-color: #E6E6E6 !important;
+}
+
+.default-searchitem-highlight-cls{
+    background-color: #FFFFFF !important;
 }
