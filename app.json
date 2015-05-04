@@ -38,6 +38,9 @@
       {
          "path": "bootstrap.css",
          "bootstrap": true
+      },
+      {
+         "path": "resources/custommdstyles.css"
       }
    ],
    "production": {},
@@ -61,7 +64,9 @@
       ],
       "fallback": []
    },
-   "resources": [],
+   "resources": [
+      "resources/custommdstyles.css"
+   ],
    "ignore": [
       "(^|/)CVS(/?$|/.*?$)"
    ],
