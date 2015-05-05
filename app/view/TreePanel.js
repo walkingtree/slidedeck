@@ -32,7 +32,6 @@ Ext.define('SD.view.TreePanel', {
     width: 360,
     title: 'Panel',
     store: 'MenuStore',
-    rootVisible: false,
 
     viewConfig: {
         itemId: 'treeMenu',

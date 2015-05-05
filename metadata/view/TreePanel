@@ -30,6 +30,7 @@
             "codeClass": null,
             "userConfig": {
                 "itemId": "treeMenu",
+                "rootVisible": false,
                 "width": null
             },
             "name": "MyTreeView",
