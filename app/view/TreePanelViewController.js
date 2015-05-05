@@ -42,7 +42,8 @@ Ext.define('SD.view.TreePanelViewController', {
             var tpl =  Ext.dom.Helper.createTemplate(html);
             ghUtil.getFileContent('master', path, function(err, data) {
 
-                console.log('DATA: ', data);
+                //                     console.log('DATA: ', data);
+                console.log('RECORD: ', record, item);
                 var el = Ext.dom.Helper.createDom(data);
 
 
@@ -50,7 +51,10 @@ Ext.define('SD.view.TreePanelViewController', {
                 var hash = domEl.getAttribute('data-slug-hash');
 
                 console.log('CODE: ', hash);
-                Ext.getCmp('content-pnl').setHtml(data);
+
+                var header = '<div class="slide head"><span class="logo"></span><h3>' + record.parentNode.data.text + '</h3><h2 class="slide">' + record.data.text + '</h2></div>';
+
+                Ext.getCmp('content-pnl').setHtml(header + data);
                 Ext.getCmp('content-pnl').addCls('markdown-body');
 
                 //TODO: This needs ceanup. We need to get rid of the user name in the pen

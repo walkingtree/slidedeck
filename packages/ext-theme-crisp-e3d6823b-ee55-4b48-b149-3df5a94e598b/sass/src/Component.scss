@@ -52,3 +52,25 @@
     text-align: center;
     width: 100%;
 }
+
+div.slide.head {
+    color: #157fcc;
+}
+
+div.slide.head h3 {
+    font-size: 18px;
+    font-family: 'SansBold',helvetica,arial,verdana,sans-serif;
+    line-height: 22px;
+    opacity: .5;
+}
+
+div.slide.head .logo {
+    background: url("http://walkingtree.in/images/wtclogo.png") no-repeat;
+    background-size: 100px;
+    width: 100px;
+    opacity: .4;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    height: 75px;
+}

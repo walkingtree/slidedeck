@@ -13,7 +13,7 @@
         "itemId": "contentPanel",
         "layout": "fit",
         "scrollable": true,
-        "title": "Content"
+        "title": ""
     },
     "name": "MyPanel2",
     "configAlternates": {
@@ -21,5 +21,35 @@
     },
     "designerId": "44f3d44e-7b24-4f92-b359-bc61304764d9",
     "viewControllerInstanceId": "d7ac53db-781c-494a-a078-27826463904d",
-    "viewModelInstanceId": "ae85f05b-33a0-4789-a035-3cc8e1487921"
+    "viewModelInstanceId": "ae85f05b-33a0-4789-a035-3cc8e1487921",
+    "cn": [
+        {
+            "type": "Ext.panel.Tool",
+            "reference": {
+                "name": "tools",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "tooltip": "Reduce font size",
+                "type": "minus"
+            },
+            "name": "MyTool",
+            "designerId": "a4d2c4fa-b169-45a0-8ebe-efb7ab1078d5"
+        },
+        {
+            "type": "Ext.panel.Tool",
+            "reference": {
+                "name": "tools",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "tooltip": "Increase font size",
+                "type": "plus"
+            },
+            "name": "MyTool1",
+            "designerId": "58709b63-ae97-439d-a143-225cf2824c61"
+        }
+    ]
 }

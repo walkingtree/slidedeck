@@ -18,7 +18,8 @@ Ext.define('SD.view.ContentPanel', {
     alias: 'widget.contentpanel',
 
     requires: [
-        'SD.view.ContentPanelViewModel'
+        'SD.view.ContentPanelViewModel',
+        'Ext.panel.Tool'
     ],
 
     viewModel: {
@@ -28,6 +29,19 @@ Ext.define('SD.view.ContentPanel', {
     itemId: 'contentPanel',
     scrollable: true,
     layout: 'fit',
-    title: 'Content'
+    title: '',
+
+    tools: [
+        {
+            xtype: 'tool',
+            tooltip: 'Reduce font size',
+            type: 'minus'
+        },
+        {
+            xtype: 'tool',
+            tooltip: 'Increase font size',
+            type: 'plus'
+        }
+    ]
 
 });
