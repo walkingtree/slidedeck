@@ -152,6 +152,55 @@
                     "designerId": "9b7cb964-ab45-44e6-b1f3-38a90b502446"
                 }
             ]
+        },
+        {
+            "type": "Ext.panel.Tool",
+            "reference": {
+                "name": "tools",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "tooltip": "Play the slideshow from the selected slide",
+                "type": "maximize"
+            },
+            "name": "MyTool2",
+            "designerId": "96bf8211-a503-4410-869e-58a3987efd93",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "owner",
+                            "tool",
+                            "event"
+                        ],
+                        "fn": "callback",
+                        "implHandler": [
+                            "var doc = window.document;",
+                            "  var docEl = doc.documentElement;",
+                            "",
+                            "  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;",
+                            "  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;",
+                            "",
+                            "  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {",
+                            "    requestFullScreen.call(docEl);",
+                            "  }",
+                            "  else {",
+                            "    cancelFullScreen.call(doc);",
+                            "  }",
+                            ""
+                        ]
+                    },
+                    "name": "callback",
+                    "designerId": "1a895f21-f044-4095-800e-d4fb0aae7ec0"
+                }
+            ]
         }
     ]
 }

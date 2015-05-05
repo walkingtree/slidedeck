@@ -21,7 +21,8 @@ Ext.define('SD.view.TreePanel', {
         'SD.view.TreePanelViewModel',
         'SD.view.TreePanelViewController',
         'SD.view.override.TreePanel',
-        'Ext.tree.View'
+        'Ext.tree.View',
+        'Ext.panel.Tool'
     ],
 
     controller: 'treepanel',
@@ -43,6 +44,28 @@ Ext.define('SD.view.TreePanel', {
             itemclick: 'onTreeItemClick',
             render: 'onTreeMenuRender'
         }
-    }
+    },
+    tools: [
+        {
+            xtype: 'tool',
+            callback: function(owner, tool, event) {
+                var doc = window.document;
+                var docEl = doc.documentElement;
+
+                var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+                if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                    requestFullScreen.call(docEl);
+                }
+                else {
+                    cancelFullScreen.call(doc);
+                }
+
+            },
+            tooltip: 'Play the slideshow from the selected slide',
+            type: 'maximize'
+        }
+    ]
 
 });
