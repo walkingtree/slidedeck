@@ -23,7 +23,7 @@ Ext.define('SD.view.TreePanelViewController', {
         var treeData = ghUtil.getTree('master',function(tree,component){
             var treePnl =   Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
             var st = treePnl.getStore();
-            treePnl.getRootNode().appendChild(tree);
+            treePnl.getRootNode().appendChild(tree[0]);
 
         });
     },
