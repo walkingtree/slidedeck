@@ -32,9 +32,11 @@ Ext.define('SD.view.TreePanel', {
     width: 360,
     title: 'Panel',
     store: 'MenuStore',
+    rootVisible: false,
 
     viewConfig: {
         itemId: 'treeMenu',
+        rootVisible: false,
         listeners: {
             beforerender: 'onTreeMenuBeforeRender',
             itemclick: 'onTreeLeafItemClick',

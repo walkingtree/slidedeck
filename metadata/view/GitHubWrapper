@@ -178,11 +178,13 @@
                 "fn": "dissectFiles",
                 "implHandler": [
                     "var obj = [];",
+                    "var niceName = '';",
+                    "",
                     "files.map(function (file) {",
                     "   if(!file.blobpath){",
                     "       file.blobpath=file.path;",
                     "   }",
-                    "   ",
+                    "",
                     "   var node,fileT,path;",
                     "   if(file.split){",
                     "       fileT = file.split(del);",
@@ -193,6 +195,7 @@
                     "   }",
                     "   if ( fileT.length > 1 ) {",
                     "       path = fileT.shift();",
+                    "//        niceName = this.cleanupPathname(path);",
                     "       node = {type: 'tree',path: path,text:path,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};",
                     "   } else {",
                     "       var type='blob';",
@@ -252,6 +255,25 @@
             },
             "name": "parseDirs",
             "designerId": "5fd6bc5f-1341-4a6e-b0c2-8def956f663f"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "path"
+                ],
+                "fn": "cleanupPathname",
+                "implHandler": [
+                    "console.log('CLEANING UP..... ' + path);"
+                ]
+            },
+            "name": "cleanupPathname",
+            "designerId": "a9f2b5f6-1c2d-467f-94ba-848062bdf688"
         }
     ]
 }

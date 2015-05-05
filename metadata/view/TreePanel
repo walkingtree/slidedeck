@@ -9,6 +9,7 @@
         "designer|userAlias": "treepanel",
         "designer|userClassName": "TreePanel",
         "itemId": "menuPanel",
+        "rootVisible": false,
         "store": "MenuStore",
         "title": "Panel",
         "width": 360
@@ -30,6 +31,7 @@
             "codeClass": null,
             "userConfig": {
                 "itemId": "treeMenu",
+                "rootVisible": false,
                 "width": null
             },
             "name": "MyTreeView",
@@ -92,7 +94,7 @@
                             "",
                             "                    console.log('CODE: ', hash);",
                             "                    Ext.getCmp('content-pnl').setHtml(data);",
-                            "debugger;",
+                            "// debugger;",
                             "                    var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');",
                             "                    for (var i = 0; i < elArr.length; i++) {",
                             "                            el = elArr[i];",

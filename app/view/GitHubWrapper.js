@@ -69,6 +69,8 @@ Ext.define('SD.view.GitHubWrapper', {
 
     dissectFiles: function(files, del) {
         var obj = [];
+        var niceName = '';
+
         files.map(function (file) {
            if(!file.blobpath){
                file.blobpath=file.path;
@@ -84,6 +86,7 @@ Ext.define('SD.view.GitHubWrapper', {
            }
            if ( fileT.length > 1 ) {
                path = fileT.shift();
+        //        niceName = this.cleanupPathname(path);
                node = {type: 'tree',path: path,text:path,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
            } else {
                var type='blob';
@@ -124,6 +127,10 @@ Ext.define('SD.view.GitHubWrapper', {
                        }
                    }
                    return obj;
+    },
+
+    cleanupPathname: function(path) {
+        console.log('CLEANING UP..... ' + path);
     }
 
 });

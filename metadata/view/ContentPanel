@@ -6,6 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "bodyPadding": 10,
         "designer|userAlias": "contentpanel",
         "designer|userClassName": "ContentPanel",
         "id": "content-pnl",
