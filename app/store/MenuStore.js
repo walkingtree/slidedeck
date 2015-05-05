@@ -39,6 +39,8 @@ Ext.define('SD.store.MenuStore', {
                     var num1 = new Number(first.data.text.split('.')[0]),
                         num2 = new Number(second.data.text.split('.')[0]);
 
+                    // console.log('num1: ' + num1 + ' : num2: ' + num2);
+
                     return num1.valueOf() > num2.valueOf() ? 1 : (num1 === num2) ? 0 : -1;
                 }
             }

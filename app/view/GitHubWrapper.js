@@ -17,7 +17,12 @@ Ext.define('SD.view.GitHubWrapper', {
     extend: 'Ext.Base',
 
     requires: [
-        'SD.view.util.StringCleaner'
+        'SD.view.util.StringCleaner',
+        'SD.view.util.IgnoreListMgr'
+    ],
+
+    ignoreList: [
+        'images'
     ],
 
     getTree: function(branchname, callback) {
@@ -90,6 +95,11 @@ Ext.define('SD.view.GitHubWrapper', {
            }
            if ( fileT.length > 1 ) {
                path = fileT.shift();
+
+               if (SD.view.util.IgnoreListMgr.needToBeIgnored(path)) {
+                   return;
+               }
+
                niceName = SD.view.util.StringCleaner.cleanup(path);
                node = {type: 'tree',path: path,text:niceName,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
            } else {
@@ -106,6 +116,11 @@ Ext.define('SD.view.GitHubWrapper', {
                    leaf=false;
                    type="tree";
                }
+
+               if (SD.view.util.IgnoreListMgr.needToBeIgnored(text)) {
+                   return;
+               }
+
                niceName = SD.view.util.StringCleaner.cleanup(text);
                node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:niceName,children:child,expanded:true};
            }

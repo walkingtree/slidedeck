@@ -1,0 +1,48 @@
+{
+    "type": "class",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "util.IgnoreListMgr",
+        "ignoreList": [
+            "['images']"
+        ],
+        "singleton": true
+    },
+    "name": "MyClass",
+    "configAlternates": {
+        "ignoreList": "array"
+    },
+    "designerId": "9c8f3b38-c1b1-4df8-a405-bcc68095074e",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "ignoreList",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "str"
+                ],
+                "fn": "needToBeIgnored",
+                "implHandler": [
+                    "return Ext.Array.contains(this.ignoreList, str);"
+                ]
+            },
+            "name": "needToBeIgnored",
+            "designerId": "f65d1144-f04f-4879-9300-35289d2dac9e"
+        }
+    ]
+}
