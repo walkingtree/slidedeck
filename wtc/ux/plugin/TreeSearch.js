@@ -100,7 +100,14 @@ Ext.define('wtc.ux.plugin.TreeSearch', {
         * function to filter tree
         * Default to ''
         */
-        filterFn: ''
+        filterFn: '',
+        
+        /**
+         * @cfg {Boolean} hideCycleBtn
+         * hide/show the cycle button to apply search filter to all nodes ot just the leaf nodes. 
+         * Default value is true, which means the button will be hidden
+         */
+        hideCycleBtn: true
     },
 
     /*Initialization of plugin*/
@@ -167,6 +174,7 @@ Ext.define('wtc.ux.plugin.TreeSearch', {
 
                     }
                 }, {
+                    hidden: me.getHideCycleBtn(),
                     xtype: 'cycle'
                     ,showText: true
                     ,prependText: 'For '

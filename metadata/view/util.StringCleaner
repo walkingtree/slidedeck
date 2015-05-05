@@ -1,0 +1,94 @@
+{
+    "type": "class",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "util.StringCleaner",
+        "rules": [
+            "['replaceHyphenWithSpace', 'removeDotMD']"
+        ],
+        "singleton": true
+    },
+    "name": "MyClass",
+    "configAlternates": {
+        "rules": "array"
+    },
+    "designerId": "8c04a187-3b78-4d8e-a440-00fd09d3c394",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "rules",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "str"
+                ],
+                "fn": "replaceHyphenWithSpace",
+                "implHandler": [
+                    "return str.replace(/-/g, \" \");"
+                ]
+            },
+            "name": "replaceHyphenWithSpace",
+            "designerId": "bdb46217-0508-4ec6-8368-1c24b7934964"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "str"
+                ],
+                "fn": "removeDotMD",
+                "implHandler": [
+                    "return str.replace('.md', \"\");"
+                ]
+            },
+            "name": "removeDotMD",
+            "designerId": "375162e6-efaa-423f-b5f2-de33f3454876"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "str"
+                ],
+                "fn": "cleanup",
+                "implHandler": [
+                    "var me = this;",
+                    "var r = me.rules, l = me.rules.length;",
+                    "var retStr = str;",
+                    "",
+                    "for (var i = 0; i < l; i++) {",
+                    "    retStr = me[r[i]](retStr);",
+                    "}",
+                    "",
+                    "return retStr;"
+                ]
+            },
+            "name": "cleanup",
+            "designerId": "05cea4e4-55e2-41dc-ab53-8a483133a3b1"
+        }
+    ]
+}

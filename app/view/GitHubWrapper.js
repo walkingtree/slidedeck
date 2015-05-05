@@ -16,6 +16,10 @@
 Ext.define('SD.view.GitHubWrapper', {
     extend: 'Ext.Base',
 
+    requires: [
+        'SD.view.util.StringCleaner'
+    ],
+
     getTree: function(branchname, callback) {
         var me=this;
         var repo=SD.util.GitInstance.getRepository();
@@ -86,8 +90,8 @@ Ext.define('SD.view.GitHubWrapper', {
            }
            if ( fileT.length > 1 ) {
                path = fileT.shift();
-        //        niceName = this.cleanupPathname(path);
-               node = {type: 'tree',path: path,text:path,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
+               niceName = SD.view.util.StringCleaner.cleanup(path);
+               node = {type: 'tree',path: path,text:niceName,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
            } else {
                var type='blob';
                var text=fileT.join(del);
@@ -102,7 +106,8 @@ Ext.define('SD.view.GitHubWrapper', {
                    leaf=false;
                    type="tree";
                }
-               node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:text,children:child,expanded:true};
+               niceName = SD.view.util.StringCleaner.cleanup(text);
+               node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:niceName,children:child,expanded:true};
            }
            obj.push(node);
         });

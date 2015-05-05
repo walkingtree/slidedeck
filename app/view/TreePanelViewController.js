@@ -29,16 +29,15 @@ Ext.define('SD.view.TreePanelViewController', {
     },
 
     onTreeLeafItemClick: function(dataview, record, item, index, e, eOpts) {
-        var txt = record.data.text;
-        var idx = txt.substr(txt.indexOf('.'));
-        if(record.data.leaf && idx === '.md'){
+        //NOTE: It assumes that the leaf node will be a valid markdown file. Hence there is no check for .md
+        if(record.data.leaf){
 
             Ext.getCmp('content-pnl').mask('loading');
 
             var path = record.data.blobpath;
             var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
-            //var github = ghUtil.getInstance("a4a5d22707f8a9b42358b0c0a13d84db1f7e3783");
-            //ghUtil.getRepo('ranjit-battewad', 'testapp');
+
+            //TODO: This needs ceanup. We need to get rid of the user name in the pen
             var html = "<iframe height='268' scrolling='no' src='http://codepen.io/ajit-kumar-azad/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/ajit-kumar-azad/pen/{hash}/'>{hash}</a> by Ajit Kumar (<a href='http://codepen.io/ajit-kumar-azad'>@ajit-kumar-azad</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
             var tpl =  Ext.dom.Helper.createTemplate(html);
             ghUtil.getFileContent('master', path, function(err, data) {
@@ -54,6 +53,7 @@ Ext.define('SD.view.TreePanelViewController', {
                 Ext.getCmp('content-pnl').setHtml(data);
                 Ext.getCmp('content-pnl').addCls('markdown-body');
 
+                //TODO: This needs ceanup. We need to get rid of the user name in the pen
                 var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');
                 for (var i = 0; i < elArr.length; i++) {
                     el = elArr[i];
