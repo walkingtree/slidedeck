@@ -26,6 +26,41 @@
             },
             "name": "MyField",
             "designerId": "27263b1e-3386-4a06-a97f-3c4bc1f75ed9"
+        },
+        {
+            "type": "Ext.util.Sorter",
+            "reference": {
+                "name": "sorters",
+                "type": "object"
+            },
+            "codeClass": null,
+            "name": "MySorter",
+            "designerId": "a56418c7-0d93-4b67-8999-5246b3d1b826",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "first",
+                            "second"
+                        ],
+                        "fn": "sorterFn",
+                        "implHandler": [
+                            "var num1 = new Number(first.data.text.split('.')[0]),",
+                            "    num2 = new Number(second.data.text.split('.')[0]);",
+                            "",
+                            "return num1.valueOf() > num2.valueOf() ? 1 : (num1 === num2) ? 0 : -1;"
+                        ]
+                    },
+                    "name": "sorterFn",
+                    "designerId": "43e884cd-b7f8-4af7-ae06-7bf6db3aa4ef"
+                }
+            ]
         }
     ]
 }

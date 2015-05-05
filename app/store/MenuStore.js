@@ -17,7 +17,8 @@ Ext.define('SD.store.MenuStore', {
     extend: 'Ext.data.TreeStore',
 
     requires: [
-        'Ext.data.field.Field'
+        'Ext.data.field.Field',
+        'Ext.util.Sorter'
     ],
 
     constructor: function(cfg) {
@@ -32,7 +33,15 @@ Ext.define('SD.store.MenuStore', {
                 {
                     name: 'text'
                 }
-            ]
+            ],
+            sorters: {
+                sorterFn: function(first, second) {
+                    var num1 = new Number(first.data.text.split('.')[0]),
+                        num2 = new Number(second.data.text.split('.')[0]);
+
+                    return num1.valueOf() > num2.valueOf() ? 1 : (num1 === num2) ? 0 : -1;
+                }
+            }
         }, cfg)]);
     }
 });
