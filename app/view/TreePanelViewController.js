@@ -46,12 +46,14 @@ Ext.define('SD.view.TreePanelViewController', {
                 console.log('DATA: ', data);
                 var el = Ext.dom.Helper.createDom(data);
 
+
                 var domEl = Ext.get(el);
                 var hash = domEl.getAttribute('data-slug-hash');
 
                 console.log('CODE: ', hash);
                 Ext.getCmp('content-pnl').setHtml(data);
-                // debugger;
+                Ext.getCmp('content-pnl').addCls('markdown-body');
+
                 var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');
                 for (var i = 0; i < elArr.length; i++) {
                     el = elArr[i];

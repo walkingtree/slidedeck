@@ -1,0 +1,14 @@
+{
+    "type": "cssresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "css_ghosuv26",
+        "url": "resources/custommdstyles.css"
+    },
+    "name": "css",
+    "designerId": "71a23229-83ba-4a53-984f-77b8d3a5b2d8"
+}
