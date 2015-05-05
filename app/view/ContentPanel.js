@@ -27,7 +27,7 @@ Ext.define('SD.view.ContentPanel', {
     id: 'content-pnl',
     itemId: 'contentPanel',
     scrollable: true,
-    bodyPadding: 10,
+    layout: 'fit',
     title: 'Content'
 
 });

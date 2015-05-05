@@ -28,7 +28,7 @@ Ext.define('SD.view.TreePanelViewController', {
         });
     },
 
-    onTreeLeafItemClick: function(dataview, record, item, index, e, eOpts) {
+    onTreeItemClick: function(dataview, record, item, index, e, eOpts) {
         //NOTE: It assumes that the leaf node will be a valid markdown file. Hence there is no check for .md
         if(record.data.leaf){
 
@@ -65,6 +65,16 @@ Ext.define('SD.view.TreePanelViewController', {
 
                 Ext.getCmp('content-pnl').unmask();
             });
+        } else {
+            //It is a parent node...just create a dummy slide content from the node text
+
+            //TODO: Make this configurable
+            var html = '<div class="topic"><div class="head"><h1>' + record.data.text + '</h1></div><div class="footer">' +
+            '2008 — 2015 Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
+            'participant in a technical training course.  Any other use or reproduction of this document is ' +
+            'unlawful without the express written consent of Walking Tree Consultancy Services Pvt. Ltd.</div></div>';
+            Ext.getCmp('content-pnl').setHtml(html);
+
         }
 
 

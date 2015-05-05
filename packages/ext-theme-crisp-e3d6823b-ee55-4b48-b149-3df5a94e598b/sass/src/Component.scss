@@ -16,3 +16,39 @@
 .default-searchitem-highlight-cls{
     background-color: #FFFFFF !important;
 }
+
+.topic {
+    background: darkslateblue; /*#54087A; radial-gradient(at 50% 50%, #54087A 0px, #965db2 80%);*/
+    margin: 0px 5px;
+    height: 100%;
+    text-align: center;
+    width: 100%;
+}
+
+.topic .head {
+    background: url("http://walkingtree.in/images/wtclogo.png") no-repeat 50% 20%;
+    color: #fff;
+    font-family: 'SansBold',helvetica,arial,verdana,sans-serif;
+    text-shadow: #000 2px 1px 5px;
+    position: absolute;
+    top: 10%;
+    height: 200px;
+    width: 100%;
+}
+
+.topic .head h1 {
+    font-size: 45px;
+    font-weight: 300;
+    margin: 200px 0 0 0;
+    border-bottom: none !important;
+}
+
+.topic .footer {
+    bottom: 2%;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    padding: 0px 40px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
