@@ -30,7 +30,9 @@ Ext.define('SD.view.TreePanel', {
     },
     itemId: 'menuPanel',
     width: 360,
-    title: 'Panel',
+    collapsible: true,
+    title: 'Topics',
+    titleCollapse: true,
     store: 'MenuStore',
 
     viewConfig: {

@@ -3,7 +3,7 @@ Ext.define('SD.util.GitInstance',{
     alias:'widget.GitInstance',
     repo:null,
     github:null,    
-    accessToken:'81b881aa2b1a32b4946f9b8d2972bbfd2312311', //use a valid token
+    accessToken:'81b881aa2b1a32b4946f9b8d2972bbfd212131', //use a valid token
     userName:'ajit-kumar-azad',
     repoName:'training',
     initComponent:function(){
@@ -24,7 +24,5 @@ Ext.define('SD.util.GitInstance',{
     getRepository:function(){
         return this.repo;
     }
-
-
 
 });

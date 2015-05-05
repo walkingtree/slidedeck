@@ -6,11 +6,13 @@
     },
     "codeClass": null,
     "userConfig": {
+        "collapsible": true,
         "designer|userAlias": "treepanel",
         "designer|userClassName": "TreePanel",
         "itemId": "menuPanel",
         "store": "MenuStore",
-        "title": "Panel",
+        "title": "Topics",
+        "titleCollapse": true,
         "width": 360
     },
     "name": "MyTreePanel",
