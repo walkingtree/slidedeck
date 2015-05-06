@@ -7,9 +7,11 @@
     "codeClass": null,
     "userConfig": {
         "collapsible": true,
+        "columnLines": null,
         "designer|userAlias": "treepanel",
         "designer|userClassName": "TreePanel",
         "itemId": "menuPanel",
+        "lines": false,
         "store": "MenuStore",
         "title": "Topics",
         "titleCollapse": true,
