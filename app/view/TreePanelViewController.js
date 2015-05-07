@@ -81,6 +81,26 @@ Ext.define('SD.view.TreePanelViewController', {
 
         }
 
+        var newValue;
+        var afterSplit = record.get('blobpath').substr(record.get('blobpath').indexOf('.')+1).replace(/[/]/g,' > ');
+        newValue = afterSplit;
+
+        if(afterSplit =='Developing-Apps-with-AngularJS > images'){
+            newValue = afterSplit.substr(afterSplit.indexOf('>')+1);
+        }
+
+        if(afterSplit == 'png'){
+            beforePng = record.get('blobpath').substr(0,record.get('blobpath').indexOf('.')).replace(/[/]/g,' > ');
+            newValue = beforePng.substr(beforePng.indexOf('>')+1);
+        } else{
+
+            if(!(afterSplit.indexOf('.') == -1)){
+                newValue = afterSplit.substr(0,afterSplit.indexOf('.'));
+            }
+        }
+
+
+        Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newValue);
 
     },
 
