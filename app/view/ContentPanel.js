@@ -19,9 +19,11 @@ Ext.define('SD.view.ContentPanel', {
 
     requires: [
         'SD.view.ContentPanelViewModel',
+        'SD.view.ContentPanelViewController',
         'Ext.panel.Tool'
     ],
 
+    controller: 'contentpanel',
     viewModel: {
         type: 'contentpanel'
     },
@@ -35,12 +37,18 @@ Ext.define('SD.view.ContentPanel', {
         {
             xtype: 'tool',
             tooltip: 'Reduce font size',
-            type: 'minus'
+            type: 'minus',
+            listeners: {
+                click: 'onFontDecreaseIconToolClick'
+            }
         },
         {
             xtype: 'tool',
             tooltip: 'Increase font size',
-            type: 'plus'
+            type: 'plus',
+            listeners: {
+                click: 'onFontIncreaseIconToolClick'
+            }
         }
     ]
 

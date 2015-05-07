@@ -1,0 +1,37 @@
+{
+    "type": "class",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "articleFontSize": "16px",
+        "designer|userClassName": "util.Contstant",
+        "headerFontSize": "13px",
+        "singleton": true,
+        "updationValue": "10"
+    },
+    "name": "util.StringCleaner1",
+    "configAlternates": {
+        "rules": "array"
+    },
+    "designerId": "a5eb025d-76d0-407f-baeb-8150e548963b",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "updationValue",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "headerFontSize",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "articleFontSize",
+            "type": "string"
+        }
+    ]
+}

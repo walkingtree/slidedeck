@@ -35,7 +35,27 @@
                 "type": "minus"
             },
             "name": "MyTool",
-            "designerId": "a4d2c4fa-b169-45a0-8ebe-efb7ab1078d5"
+            "designerId": "a4d2c4fa-b169-45a0-8ebe-efb7ab1078d5",
+            "cn": [
+                {
+                    "type": "viewcontrollereventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onFontDecreaseIconToolClick",
+                        "implHandler": [
+                            "this.handleFontSizeAction(-1);"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "name": "onFontDecreaseIconToolClick",
+                    "designerId": "d483ccea-aabc-458f-94f9-24bd34591a73"
+                }
+            ]
         },
         {
             "type": "Ext.panel.Tool",
@@ -49,7 +69,27 @@
                 "type": "plus"
             },
             "name": "MyTool1",
-            "designerId": "58709b63-ae97-439d-a143-225cf2824c61"
+            "designerId": "58709b63-ae97-439d-a143-225cf2824c61",
+            "cn": [
+                {
+                    "type": "viewcontrollereventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onFontIncreaseIconToolClick",
+                        "implHandler": [
+                            "this.handleFontSizeAction(1);"
+                        ],
+                        "name": "click",
+                        "scope": "me"
+                    },
+                    "name": "onFontIncreaseIconToolClick",
+                    "designerId": "6271ef2b-c444-494b-922e-a0c2c234b3e0"
+                }
+            ]
         }
     ]
 }

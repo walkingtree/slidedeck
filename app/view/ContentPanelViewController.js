@@ -15,5 +15,44 @@
 
 Ext.define('SD.view.ContentPanelViewController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.contentpanel'
+    alias: 'controller.contentpanel',
+
+    requires: [
+        'SD.view.util.Contstant'
+    ],
+
+    handleFontSizeAction: function(value) {
+        var headerPage = Ext.get(this.view.body.dom).down('.slide');  //-- Header
+        var articlePage = Ext.get(this.view.body.dom).down('.markdown-body');  //-- Article
+
+        var currentHeaderFontSize = headerPage.getStyle('font-size');
+        var currentArticleFontSize = articlePage.getStyle('font-size');
+
+        updatedHeaderFontSize = parseInt(currentHeaderFontSize) + (SD.view.util.Contstant.updationValue*value)  + "px";
+        updatedArticleFontSize = parseInt(currentArticleFontSize) +(SD.view.util.Contstant.updationValue*value) + "px";
+        if(value =='-1'){
+           if(parseInt(updatedHeaderFontSize) >(parseInt(SD.view.util.Contstant.headerFontSize)-1)){
+            headerPage.setStyle('font-size',updatedHeaderFontSize);
+           }else{
+           headerPage.setStyle('font-size',SD.view.util.Contstant.headerFontSize);
+           }
+           if(parseInt(updatedArticleFontSize) >(parseInt(SD.view.util.Contstant.articleFontSize)-1)){
+            articlePage.setStyle('font-size',updatedArticleFontSize);
+           }else{
+                articlePage.setStyle('font-size',SD.view.util.Contstant.articleFontSize);
+            }
+        }else{
+           headerPage.setStyle('font-size',updatedHeaderFontSize);
+           articlePage.setStyle('font-size',updatedArticleFontSize);
+        }
+    },
+
+    onFontDecreaseIconToolClick: function(tool, e, owner, eOpts) {
+        this.handleFontSizeAction(-1);
+    },
+
+    onFontIncreaseIconToolClick: function(tool, e, owner, eOpts) {
+        this.handleFontSizeAction(1);
+    }
+
 });

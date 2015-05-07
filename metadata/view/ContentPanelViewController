@@ -7,7 +7,53 @@
     "codeClass": null,
     "userConfig": {
         "designer|userAlias": "contentpanel",
-        "designer|userClassName": "ContentPanelViewController"
+        "designer|userClassName": "ContentPanelViewController",
+        "requires": [
+            "SD.view.util.Contstant"
+        ]
     },
-    "designerId": "d7ac53db-781c-494a-a078-27826463904d"
+    "designerId": "d7ac53db-781c-494a-a078-27826463904d",
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "value"
+                ],
+                "fn": "handleFontSizeAction",
+                "implHandler": [
+                    "var headerPage = Ext.get(this.view.body.dom).down('.slide');  //-- Header",
+                    "var articlePage = Ext.get(this.view.body.dom).down('.markdown-body');  //-- Article",
+                    "",
+                    "var currentHeaderFontSize = headerPage.getStyle('font-size');",
+                    "var currentArticleFontSize = articlePage.getStyle('font-size');",
+                    "",
+                    "updatedHeaderFontSize = parseInt(currentHeaderFontSize) + (SD.view.util.Contstant.updationValue*value)  + \"px\";",
+                    "updatedArticleFontSize = parseInt(currentArticleFontSize) +(SD.view.util.Contstant.updationValue*value) + \"px\";",
+                    "if(value =='-1'){",
+                    "   if(parseInt(updatedHeaderFontSize) >(parseInt(SD.view.util.Contstant.headerFontSize)-1)){",
+                    "    headerPage.setStyle('font-size',updatedHeaderFontSize);",
+                    "   }else{",
+                    "   headerPage.setStyle('font-size',SD.view.util.Contstant.headerFontSize);",
+                    "   }",
+                    "   if(parseInt(updatedArticleFontSize) >(parseInt(SD.view.util.Contstant.articleFontSize)-1)){",
+                    "    articlePage.setStyle('font-size',updatedArticleFontSize);",
+                    "   }else{",
+                    "        articlePage.setStyle('font-size',SD.view.util.Contstant.articleFontSize);",
+                    "    }",
+                    "}else{",
+                    "   headerPage.setStyle('font-size',updatedHeaderFontSize);",
+                    "   articlePage.setStyle('font-size',updatedArticleFontSize);",
+                    "}"
+                ]
+            },
+            "name": "handleFontSizeAction",
+            "designerId": "2cc2862e-3b5d-4e4f-b846-b26015a19e29"
+        }
+    ]
 }
