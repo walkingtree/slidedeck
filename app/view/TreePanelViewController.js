@@ -25,6 +25,15 @@ Ext.define('SD.view.TreePanelViewController', {
             var st = treePnl.getStore();
             treePnl.getRootNode().appendChild(tree[0]);
 
+            if (treePnl.getRootNode().hasChildNodes()) {
+
+                treePnl.getSelectionModel().select(st.getAt(0));
+                var rec = st.getAt(0);
+                treePnl.getController().onTreeItemClick('',rec);
+            } else {
+                console.log('no childs');
+            }
+
         });
     },
 
@@ -81,27 +90,17 @@ Ext.define('SD.view.TreePanelViewController', {
 
         }
 
-        var newValue;
-        var afterSplit = record.get('blobpath').substr(record.get('blobpath').indexOf('.')+1).replace(/[/]/g,' > ');
-        newValue = afterSplit;
+        var finalText = null;
+        var text = record.getPath('text');
+        finalText = text.split('.');
 
-        if(afterSplit =='Developing-Apps-with-AngularJS > images'){
-            newValue = afterSplit.substr(afterSplit.indexOf('>')+1);
+        if(finalText.length ==1){
+            var newVal = finalText[0].replace(/[//]/g,'');
+        }else {
+            var newVal = finalText[1].replace(/[/]/g,' > ');
         }
 
-        if(afterSplit == 'png'){
-            beforePng = record.get('blobpath').substr(0,record.get('blobpath').indexOf('.')).replace(/[/]/g,' > ');
-            newValue = beforePng.substr(beforePng.indexOf('>')+1);
-        } else{
-
-            if(!(afterSplit.indexOf('.') == -1)){
-                newValue = afterSplit.substr(0,afterSplit.indexOf('.'));
-            }
-        }
-
-
-        Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newValue);
-
+        Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
     },
 
     onTreeMenuRender: function(component, eOpts) {
