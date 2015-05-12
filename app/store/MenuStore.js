@@ -26,6 +26,7 @@ Ext.define('SD.store.MenuStore', {
         cfg = cfg || {};
         me.callParent([Ext.apply({
             storeId: 'MyTreeStore',
+            defaultRootText: ' ',
             root: {
                 expanded: true
             },

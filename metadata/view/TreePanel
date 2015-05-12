@@ -56,9 +56,10 @@
                             "   var treePnl =   Ext.ComponentQuery.query('[itemId=menuPanel]')[0];",
                             "   var st = treePnl.getStore();",
                             "   treePnl.getRootNode().appendChild(tree[0]);",
-                            "    ",
+                            "",
+                            "    treePnl.collapseAll();",
                             "    if (treePnl.getRootNode().hasChildNodes()) {",
-                            "        ",
+                            "        treePnl.getRootNode().firstChild.expand();",
                             "        treePnl.getSelectionModel().select(st.getAt(0));",
                             "        var rec = st.getAt(0);",
                             "        treePnl.getController().onTreeItemClick('',rec);",
@@ -171,6 +172,53 @@
                     },
                     "name": "onTreeMenuRender",
                     "designerId": "9b7cb964-ab45-44e6-b1f3-38a90b502446"
+                },
+                {
+                    "type": "viewcontrollereventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onTreeMenuItemKeyup",
+                        "implHandler": [
+                            "",
+                            "var treePnl =   Ext.ComponentQuery.query('[itemId=menuPanel]')[0];",
+                            "if (e.getKey() == Ext.EventObject.DOWN) {",
+                            "",
+                            "   treePnl.getController().onTreeItemClick('',record);",
+                            "}else if (e.getKey() == Ext.EventObject.UP) {",
+                            "   treePnl.getController().onTreeItemClick('',record);",
+                            "",
+                            "}else if (e.getKey() == Ext.EventObject.LEFT) {",
+                            "   ",
+                            "",
+                            "    if (treePnl.getRootNode().hasChildNodes()) {",
+                            "     ",
+                            "      treePnl.getRootNode().firstChild.expand();",
+                            "   }  ",
+                            "   ",
+                            "   treePnl.getController().onTreeItemClick('',record);",
+                            "",
+                            "}else if (e.getKey() == Ext.EventObject.RIGHT) {",
+                            "   var treeParentNode = record.parentNode;",
+                            "   if(treeParentNode) {",
+                            "       return false;",
+                            "   }",
+                            "   if(treePnl.selection.data.leaf == true)",
+                            "   {",
+                            "       return false;",
+                            "   }else{",
+                            "       treePnl.getController().onTreeItemClick('',record);",
+                            "   }",
+                            "}"
+                        ],
+                        "name": "itemkeyup",
+                        "scope": "me"
+                    },
+                    "name": "onTreeMenuItemKeyup",
+                    "designerId": "f947fa6c-999a-4c62-be9d-2f3c1c41a670"
                 }
             ]
         },

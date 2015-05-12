@@ -25,8 +25,9 @@ Ext.define('SD.view.TreePanelViewController', {
             var st = treePnl.getStore();
             treePnl.getRootNode().appendChild(tree[0]);
 
+            treePnl.collapseAll();
             if (treePnl.getRootNode().hasChildNodes()) {
-
+                treePnl.getRootNode().firstChild.expand();
                 treePnl.getSelectionModel().select(st.getAt(0));
                 var rec = st.getAt(0);
                 treePnl.getController().onTreeItemClick('',rec);
@@ -105,6 +106,39 @@ Ext.define('SD.view.TreePanelViewController', {
 
     onTreeMenuRender: function(component, eOpts) {
         component.setLoading(false);
+    },
+
+    onTreeMenuItemKeyup: function(dataview, record, item, index, e, eOpts) {
+
+        var treePnl =   Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
+        if (e.getKey() == Ext.EventObject.DOWN) {
+
+            treePnl.getController().onTreeItemClick('',record);
+        }else if (e.getKey() == Ext.EventObject.UP) {
+            treePnl.getController().onTreeItemClick('',record);
+
+        }else if (e.getKey() == Ext.EventObject.LEFT) {
+
+
+            if (treePnl.getRootNode().hasChildNodes()) {
+
+                treePnl.getRootNode().firstChild.expand();
+            }
+
+            treePnl.getController().onTreeItemClick('',record);
+
+        }else if (e.getKey() == Ext.EventObject.RIGHT) {
+            var treeParentNode = record.parentNode;
+            if(treeParentNode) {
+                return false;
+            }
+            if(treePnl.selection.data.leaf == true)
+            {
+                return false;
+            }else{
+                treePnl.getController().onTreeItemClick('',record);
+            }
+        }
     }
 
 });
