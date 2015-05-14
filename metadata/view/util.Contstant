@@ -7,8 +7,10 @@
     "codeClass": null,
     "userConfig": {
         "articleFontSize": "16px",
+        "designer|userAlias": null,
         "designer|userClassName": "util.Contstant",
         "headerFontSize": "13px",
+        "minWidthValue": "600",
         "singleton": true,
         "updationValue": "10"
     },
@@ -31,6 +33,11 @@
         {
             "group": "(Custom Properties)",
             "name": "articleFontSize",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "minWidthValue",
             "type": "string"
         }
     ]

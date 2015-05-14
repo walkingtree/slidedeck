@@ -19,11 +19,13 @@ Ext.define('SD.view.MyViewport', {
 
     requires: [
         'SD.view.MyViewportViewModel',
+        'SD.view.MyViewportViewController',
         'SD.view.TreePanel',
         'SD.view.ContentPanel',
         'Ext.tree.Panel'
     ],
 
+    controller: 'myviewport',
     viewModel: {
         type: 'myviewport'
     },
@@ -40,6 +42,9 @@ Ext.define('SD.view.MyViewport', {
             xtype: 'contentpanel',
             region: 'center'
         }
-    ]
+    ],
+    listeners: {
+        resize: 'onHeaderPanelResize'
+    }
 
 });

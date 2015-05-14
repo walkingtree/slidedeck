@@ -6,90 +6,96 @@
     },
     "codeClass": null,
     "userConfig": {
-        "bodyPadding": null,
+        "bodyPadding": 5,
         "designer|userAlias": "contentpanel",
         "designer|userClassName": "ContentPanel",
+        "dockedItems": [
+            "{",
+            "xtype: 'toolbar',",
+            "dock: 'top',   ",
+            "itemid:'contentPanel',",
+            "layout:'auto',",
+            "items: [",
+            "    {",
+            "        xtype: 'breadcrumb',",
+            "        id: 'breadcrumb', ",
+            "        flex:1,",
+            "        itemId:'breadcrumb',",
+            "        publishes: 'selection',",
+            "        bind: {",
+            "            store: '{MenuStore}'",
+            "        }",
+            "    },",
+            "    {",
+            "        xtype:'panel',",
+            "        itemId:'contentPanel',",
+            "        title:'Content',",
+            "        bind: {",
+            "            title: '{breadcrumb.selection.text}'",
+            "        },",
+            "        flex:'1',",
+            "        tools: [",
+            "            {",
+            "            xtype: 'tool',",
+            "            tooltip: 'Reduce font size',",
+            "            type: 'minus',",
+            "            handler: function() {",
+            "                this.up('#contentPanel1').getController().handleFontSizeAction('-1')",
+            "            }",
+            "        },",
+            "    {",
+            "        xtype: 'tool',",
+            "        tooltip: 'Increase font size',",
+            "        type: 'plus',",
+            "        handler: function() {",
+            "            this.up('#contentPanel1').getController().handleFontSizeAction('1') ",
+            "        }",
+            "    },",
+            "    {",
+            "        xtype: 'tool',",
+            "        callback: function(owner, tool, event) {",
+            "        var doc = window.document;",
+            "        var docEl = doc.documentElement;",
+            "",
+            "var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;",
+            "var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;",
+            "",
+            "if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {",
+            "requestFullScreen.call(docEl);",
+            "}",
+            "else {",
+            "cancelFullScreen.call(doc);",
+            "}",
+            "",
+            "},",
+            "itemId: 'fullScreenId',",
+            "hidden:true,",
+            "tooltip: 'Play the slideshow from the selected slide',",
+            "type: 'maximize'",
+            "}]  ",
+            "}",
+            "]",
+            "}"
+        ],
         "id": "content-pnl",
-        "itemId": "contentPanel",
+        "itemId": "contentPanel1",
         "layout": "fit",
         "scrollable": true,
-        "title": ""
+        "title": null
     },
     "name": "MyPanel2",
     "configAlternates": {
-        "scrollable": "boolean"
+        "scrollable": "boolean",
+        "dockedItems": "object"
     },
     "designerId": "44f3d44e-7b24-4f92-b359-bc61304764d9",
-    "viewControllerInstanceId": "d7ac53db-781c-494a-a078-27826463904d",
-    "viewModelInstanceId": "ae85f05b-33a0-4789-a035-3cc8e1487921",
-    "cn": [
+    "customConfigs": [
         {
-            "type": "Ext.panel.Tool",
-            "reference": {
-                "name": "tools",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "tooltip": "Reduce font size",
-                "type": "minus"
-            },
-            "name": "MyTool",
-            "designerId": "a4d2c4fa-b169-45a0-8ebe-efb7ab1078d5",
-            "cn": [
-                {
-                    "type": "viewcontrollereventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onFontDecreaseIconToolClick",
-                        "implHandler": [
-                            "this.handleFontSizeAction(-1);"
-                        ],
-                        "name": "click",
-                        "scope": "me"
-                    },
-                    "name": "onFontDecreaseIconToolClick",
-                    "designerId": "d483ccea-aabc-458f-94f9-24bd34591a73"
-                }
-            ]
-        },
-        {
-            "type": "Ext.panel.Tool",
-            "reference": {
-                "name": "tools",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "tooltip": "Increase font size",
-                "type": "plus"
-            },
-            "name": "MyTool1",
-            "designerId": "58709b63-ae97-439d-a143-225cf2824c61",
-            "cn": [
-                {
-                    "type": "viewcontrollereventbinding",
-                    "reference": {
-                        "name": "listeners",
-                        "type": "array"
-                    },
-                    "codeClass": null,
-                    "userConfig": {
-                        "fn": "onFontIncreaseIconToolClick",
-                        "implHandler": [
-                            "this.handleFontSizeAction(1);"
-                        ],
-                        "name": "click",
-                        "scope": "me"
-                    },
-                    "name": "onFontIncreaseIconToolClick",
-                    "designerId": "6271ef2b-c444-494b-922e-a0c2c234b3e0"
-                }
-            ]
+            "group": "(Custom Properties)",
+            "name": "dockedItems",
+            "type": "string"
         }
-    ]
+    ],
+    "viewControllerInstanceId": "d7ac53db-781c-494a-a078-27826463904d",
+    "viewModelInstanceId": "ae85f05b-33a0-4789-a035-3cc8e1487921"
 }

@@ -39,7 +39,6 @@ Ext.define('SD.view.TreePanel', {
 
     viewConfig: {
         itemId: 'treeMenu',
-        rootVisible: false,
         listeners: {
             beforerender: 'onTreeMenuBeforeRender',
             itemclick: 'onTreeItemClick',

@@ -23,7 +23,8 @@ Ext.application({
 
     requires: [
         'wtc.ux.plugin.TreeSearch',
-        'SD.util.GitInstance'
+        'SD.util.GitInstance',
+        'SD.view.util.Contstant'
     ],
     stores: [
         'MenuStore'

@@ -45,14 +45,6 @@ Ext.define('SD.view.ContentPanelViewController', {
            headerPage.setStyle('font-size',updatedHeaderFontSize);
            articlePage.setStyle('font-size',updatedArticleFontSize);
         }
-    },
-
-    onFontDecreaseIconToolClick: function(tool, e, owner, eOpts) {
-        this.handleFontSizeAction(-1);
-    },
-
-    onFontIncreaseIconToolClick: function(tool, e, owner, eOpts) {
-        this.handleFontSizeAction(1);
     }
 
 });

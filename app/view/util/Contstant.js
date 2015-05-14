@@ -20,5 +20,6 @@ Ext.define('SD.view.util.Contstant', {
 
     updationValue: '10',
     headerFontSize: '13px',
-    articleFontSize: '16px'
+    articleFontSize: '16px',
+    minWidthValue: '600'
 });

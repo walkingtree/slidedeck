@@ -19,37 +19,87 @@ Ext.define('SD.view.ContentPanel', {
 
     requires: [
         'SD.view.ContentPanelViewModel',
-        'SD.view.ContentPanelViewController',
-        'Ext.panel.Tool'
+        'SD.view.ContentPanelViewController'
     ],
+
+    config: {
+        dockedItems: {
+            xtype: 'toolbar',
+            dock: 'top',
+            itemid: 'contentPanel',
+            layout: 'auto',
+            items: [
+                {
+                    xtype: 'breadcrumb',
+                    id: 'breadcrumb',
+                    flex: 1,
+                    itemId: 'breadcrumb',
+                    publishes: 'selection',
+                    bind: {
+                        store: '{MenuStore}'
+                    }
+                },
+                {
+                    xtype: 'panel',
+                    itemId: 'contentPanel',
+                    title: 'Content',
+                    bind: {
+                        title: '{breadcrumb.selection.text}'
+                    },
+                    flex: '1',
+                    tools: [
+                        {
+                            xtype: 'tool',
+                            tooltip: 'Reduce font size',
+                            type: 'minus',
+                            handler: function() {
+                                        this.up('#contentPanel1').getController().handleFontSizeAction('-1')
+                                    }
+                        },
+                        {
+                            xtype: 'tool',
+                            tooltip: 'Increase font size',
+                            type: 'plus',
+                            handler: function() {
+                                    this.up('#contentPanel1').getController().handleFontSizeAction('1') 
+                                }
+                        },
+                        {
+                            xtype: 'tool',
+                            callback: function(owner, tool, event) {
+                                var doc = window.document;
+                                var docEl = doc.documentElement;
+                        
+                        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                        var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+                        
+                        if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                        requestFullScreen.call(docEl);
+                        }
+                        else {
+                        cancelFullScreen.call(doc);
+                        }
+                        
+                        },
+                            itemId: 'fullScreenId',
+                            hidden: true,
+                            tooltip: 'Play the slideshow from the selected slide',
+                            type: 'maximize'
+                        }
+                    ]
+                }
+            ]
+        }
+    },
 
     controller: 'contentpanel',
     viewModel: {
         type: 'contentpanel'
     },
     id: 'content-pnl',
-    itemId: 'contentPanel',
+    itemId: 'contentPanel1',
     scrollable: true,
     layout: 'fit',
-    title: '',
-
-    tools: [
-        {
-            xtype: 'tool',
-            tooltip: 'Reduce font size',
-            type: 'minus',
-            listeners: {
-                click: 'onFontDecreaseIconToolClick'
-            }
-        },
-        {
-            xtype: 'tool',
-            tooltip: 'Increase font size',
-            type: 'plus',
-            listeners: {
-                click: 'onFontIncreaseIconToolClick'
-            }
-        }
-    ]
+    bodyPadding: 5
 
 });
