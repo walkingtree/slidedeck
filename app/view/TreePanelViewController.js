@@ -17,6 +17,14 @@ Ext.define('SD.view.TreePanelViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.treepanel',
 
+    requires: [
+        'Ext.app.route.Route'
+    ],
+
+    routes: {
+        '#': 'processRout'
+    },
+
     handleNodeSelection: function(record) {
         var finalText = null;
                var text = record.getPath('text');
@@ -28,6 +36,17 @@ Ext.define('SD.view.TreePanelViewController', {
                }
                Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
 
+        var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
+        var text=treePnl.getStore().getRootNode();
+        if(text){
+            textR=text.get('text');
+        }
+        var blobPath=record.get('blobpath');
+        var textString=blobPath.substr(textR.length+1,blobPath.length);
+        this.redirectTo(''+textString);
+
+        var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
+        bcTitle.setSelection(record);
 
 
         if(record.data.leaf){
@@ -77,31 +96,56 @@ Ext.define('SD.view.TreePanelViewController', {
         bcTitle.setSelection(record);
     },
 
-    onTreeMenuBeforeRender: function(component, eOpts) {
-        component.setLoading(true);
-        var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
-        var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
+    processRout: function() {
+        var token = Ext.util.History.getToken();
+
+        var treePnl = this.view;
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
-
         var st = treePnl.getStore();
-        var treeData = ghUtil.getTree('master',function(tree,component){
+        var extraToken=st.getRootNode().get('blobpath')+'/';
+        var text=extraToken+token;
+        var rec=st.findNode('blobpath',text);
+        console.log(rec);
+        var x = bcTitle.getState();
+        if(!rec){
+            rec=st.getAt(0);
+        }
 
+        treePnl.getSelectionModel().select(rec);
+        var path = rec.getPath('text');
+        bcTitle.setSelection(rec);
+        treePnl.expandPath(path,'text');
+        treePnl.getController().handleNodeSelection(rec);
+    },
+
+    onTreeMenuBeforeRender: function(component, eOpts) {
+        var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
+        var treePnl = this.view;
+        var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
+        var st = treePnl.getStore();
+
+        var treeData = ghUtil.getTree('master',function(tree,component){
             st.setRootNode(tree[0]);
             treePnl.collapseAll();
             if (treePnl.getRootNode().hasChildNodes()) {
                 treePnl.getRootNode().expand();
-                treePnl.getSelectionModel().select(st.getAt(0));
-                bcTitle.setStore(st);
-                bcTitle.addListener('selectionchange',function(th,node,eOpts){
-                    record = th.getSelection();
-                    var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
-                    treePnl.getController().handleNodeSelection(record);
-                });
-                var rec = st.getAt(0);
-                treePnl.getController().onTreeItemClick('',rec);
+                treePnl.getController().processRout();
             } else {
                 console.log('no childs');
             }
+
+            bcTitle.setStore(st);
+            var currentNode = treePnl.getSelection()[0];
+
+            bcTitle.setSelection(currentNode);
+            bcTitle.addListener('selectionchange',function(th,node,eOpts){
+                var record = th.getSelection();
+                var treePnl = this.view;
+                bcTitle.setSelection(record);
+                treePnl.getController().handleNodeSelection(record);
+                treePnl.getSelectionModel().select(record);
+
+            });
 
         });
     },
@@ -125,12 +169,6 @@ Ext.define('SD.view.TreePanelViewController', {
             treePnl.getController().onTreeItemClick('',record);
 
         }else if (e.getKey() == Ext.EventObject.LEFT) {
-
-
-            if (treePnl.getRootNode().hasChildNodes()) {
-
-                treePnl.getRootNode().firstChild.expand();
-            }
 
             treePnl.getController().onTreeItemClick('',record);
 

@@ -34,6 +34,17 @@
                     "       }",
                     "       Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);",
                     "",
+                    "var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];",
+                    "var text=treePnl.getStore().getRootNode();",
+                    "if(text){",
+                    "    textR=text.get('text');",
+                    "}",
+                    "var blobPath=record.get('blobpath');",
+                    "var textString=blobPath.substr(textR.length+1,blobPath.length);",
+                    "this.redirectTo(''+textString);",
+                    "",
+                    "var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];",
+                    "bcTitle.setSelection(record);",
                     "",
                     "",
                     "if(record.data.leaf){",
@@ -85,6 +96,41 @@
             },
             "name": "handleNodeSelection",
             "designerId": "3a6f6ab3-e813-4787-b619-676fd78c993a"
+        },
+        {
+            "type": "Ext.app.route.Route",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "processRout",
+                "implHandler": [
+                    "var token = Ext.util.History.getToken();",
+                    "",
+                    "var treePnl = this.view;",
+                    "var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];",
+                    "var st = treePnl.getStore();",
+                    "var extraToken=st.getRootNode().get('blobpath')+'/';",
+                    "var text=extraToken+token;",
+                    "var rec=st.findNode('blobpath',text);",
+                    "console.log(rec);",
+                    "var x = bcTitle.getState();",
+                    "if(!rec){",
+                    "    rec=st.getAt(0);",
+                    "}",
+                    "",
+                    "treePnl.getSelectionModel().select(rec);",
+                    "var path = rec.getPath('text');",
+                    "bcTitle.setSelection(rec);",
+                    "treePnl.expandPath(path,'text');",
+                    "treePnl.getController().handleNodeSelection(rec);"
+                ],
+                "url": "#"
+            },
+            "name": "processRout",
+            "designerId": "a248c5f4-a553-4d3a-bec4-420217c3ef30"
         }
     ]
 }
