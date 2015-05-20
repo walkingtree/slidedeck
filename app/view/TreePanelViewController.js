@@ -43,13 +43,16 @@ Ext.define('SD.view.TreePanelViewController', {
         }
         var blobPath=record.get('blobpath');
         var textString=blobPath.substr(textR.length+1,blobPath.length);
-        this.redirectTo(''+textString);
+
 
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
         bcTitle.setSelection(record);
 
 
         if(record.data.leaf){
+
+           var newString = textString.substr(0,textString.indexOf('.md'));
+           this.redirectTo(''+newString);
 
            Ext.getCmp('content-pnl').mask('loading');
 
@@ -79,6 +82,9 @@ Ext.define('SD.view.TreePanelViewController', {
 
 
         } else {
+
+           this.redirectTo(''+textString);
+
            //It is a parent node...just create a dummy slide content from the node text
 
            //TODO: Make this configurable
@@ -103,13 +109,23 @@ Ext.define('SD.view.TreePanelViewController', {
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
         var st = treePnl.getStore();
         var extraToken=st.getRootNode().get('blobpath')+'/';
-        var text=extraToken+token;
+        //var text=extraToken+token;
         var rec=st.findNode('blobpath',text);
         console.log(rec);
-        var x = bcTitle.getState();
+        //var x = bcTitle.getState();
+
+        var text=extraToken+token+'.md';
+        var txt =extraToken+token;
+        var rec=st.findNode('blobpath',text);
         if(!rec){
-            rec=st.getAt(0);
+           rec = st.findNode('blobpath',txt);
+           if(!rec){
+               rec=st.getAt(0);
+           }
         }
+
+
+
 
         treePnl.getSelectionModel().select(rec);
         var path = rec.getPath('text');
@@ -119,6 +135,7 @@ Ext.define('SD.view.TreePanelViewController', {
     },
 
     onTreeMenuBeforeRender: function(component, eOpts) {
+        var me = this;
         var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
         var treePnl = this.view;
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
@@ -140,9 +157,9 @@ Ext.define('SD.view.TreePanelViewController', {
             bcTitle.setSelection(currentNode);
             bcTitle.addListener('selectionchange',function(th,node,eOpts){
                 var record = th.getSelection();
-                var treePnl = this.view;
+                var treePnl = me.view;
                 bcTitle.setSelection(record);
-                treePnl.getController().handleNodeSelection(record);
+                me.handleNodeSelection(record);
                 treePnl.getSelectionModel().select(record);
 
             });

@@ -49,6 +49,7 @@
                     "userConfig": {
                         "fn": "onTreeMenuBeforeRender",
                         "implHandler": [
+                            "var me = this;",
                             "var ghUtil = Ext.create('SD.view.GitHubWrapper', {});",
                             "var treePnl = this.view;",
                             "var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];",
@@ -70,9 +71,9 @@
                             "  bcTitle.setSelection(currentNode);",
                             "  bcTitle.addListener('selectionchange',function(th,node,eOpts){",
                             "       var record = th.getSelection();",
-                            "       var treePnl = this.view;",
+                            "       var treePnl = me.view;",
                             "       bcTitle.setSelection(record);",
-                            "       treePnl.getController().handleNodeSelection(record);",
+                            "       me.handleNodeSelection(record);",
                             "       treePnl.getSelectionModel().select(record);",
                             "",
                             "   });",
