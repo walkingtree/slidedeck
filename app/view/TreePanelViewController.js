@@ -164,7 +164,12 @@ Ext.define('SD.view.TreePanelViewController', {
 
             });
 
+            Ext.getBody().unmask();
+
         });
+
+
+
     },
 
     onTreeItemClick: function(dataview, record, item, index, e, eOpts) {

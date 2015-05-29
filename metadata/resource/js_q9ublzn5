@@ -6,6 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "bootstrap": true,
         "defer": false,
         "designer|userClassName": "js_q9ublzn5",
         "id": "underscore-min.js",

@@ -46,7 +46,7 @@
                 "fn": "getTree",
                 "implHandler": [
                     "var me=this;",
-                    "var repo=SD.util.GitInstance.getRepository();",
+                    "var repo=SD.util.Launcher.getRepository();",
                     "repo.getTree(branchname + '?recursive=true', function(err, tree) {",
                     "     var obj=me.explodeTree(tree,'/');",
                     "     me.data=tree;",
@@ -122,7 +122,7 @@
                 ],
                 "fn": "getFileContent",
                 "implHandler": [
-                    "var repo=SD.util.GitInstance.getRepository();",
+                    "var repo=SD.util.Launcher.getRepository();",
                     "repo.read(branchname, path, cb);"
                 ]
             },

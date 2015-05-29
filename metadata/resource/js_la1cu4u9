@@ -8,6 +8,7 @@
     "userConfig": {
         "defer": false,
         "designer|userClassName": "js_la1cu4u9",
+        "includeInBundle": true,
         "url": "./wtc/ux/plugin/TreeSearch.js",
         "x-compile": true
     },

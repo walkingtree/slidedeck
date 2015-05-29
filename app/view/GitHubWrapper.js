@@ -27,7 +27,7 @@ Ext.define('SD.view.GitHubWrapper', {
 
     getTree: function(branchname, callback) {
         var me=this;
-        var repo=SD.util.GitInstance.getRepository();
+        var repo=SD.util.Launcher.getRepository();
         repo.getTree(branchname + '?recursive=true', function(err, tree) {
              var obj=me.explodeTree(tree,'/');
              me.data=tree;
@@ -55,7 +55,7 @@ Ext.define('SD.view.GitHubWrapper', {
     },
 
     getFileContent: function(branchname, path, cb) {
-        var repo=SD.util.GitInstance.getRepository();
+        var repo=SD.util.Launcher.getRepository();
         repo.read(branchname, path, cb);
     },
 

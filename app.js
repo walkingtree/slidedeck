@@ -23,21 +23,21 @@ Ext.application({
 
     requires: [
         'wtc.ux.plugin.TreeSearch',
-        'SD.util.GitInstance',
+        'SD.util.Launcher',
         'SD.view.util.Contstant'
     ],
     stores: [
         'MenuStore'
     ],
     views: [
-        'MyViewport',
+        'MyContainer',
         'TreePanel',
         'ContentPanel'
     ],
     name: 'SD',
 
     launch: function() {
-        Ext.create('SD.view.MyViewport');
+        Ext.create('SD.view.MyContainer', {renderTo: Ext.getBody()});
     }
 
 });

@@ -9,14 +9,14 @@
         "name": "SD",
         "requires": [
             "wtc.ux.plugin.TreeSearch",
-            "SD.util.GitInstance",
+            "SD.util.Launcher",
             "SD.view.util.Contstant"
         ],
         "stores": [
             "MenuStore"
         ],
         "views": [
-            "MyViewport",
+            "MyContainer",
             "TreePanel",
             "ContentPanel"
         ]

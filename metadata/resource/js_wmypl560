@@ -6,6 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "bootstrap": true,
         "defer": false,
         "designer|userClassName": "js_wmypl560",
         "id": "github.js",

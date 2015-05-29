@@ -39,4 +39,14 @@
             <target name="-after-build"/>
     -->
 
+    
+<target name="-after-build">
+    <property file="build.properties"/>
+    <exec dir="." executable="sencha">
+  <arg line="fs concatenate  -from=${classpath_files} -to=build/production/SD/concatenate-all.js"/>
+    </exec>
+    <delete file="build/production/SD/app.js"/>
+    <copy file="build/production/SD/concatenate-all.js" tofile="build/production/SD/app.js"/>   
+</target> 
+
 </project>

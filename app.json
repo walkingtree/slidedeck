@@ -15,19 +15,23 @@
       },
       {
          "path": "lib/underscore-min.js",
+         "bootstrap": true,
          "x-compile": true
       },
       {
          "path": "lib/github.js",
+         "bootstrap": true,
          "x-compile": true
       },
       {
          "path": "./wtc/ux/plugin/TreeSearch.js",
-         "x-compile": true
+         "x-compile": true,
+         "includeInBundle": true
       },
       {
-         "path": "app/util/GitInstance.js",
-         "x-compile": true
+         "path": "app/util/Launcher.js",
+         "x-compile": true,
+         "includeInBundle": true
       },
       {
          "path": "app.js",
