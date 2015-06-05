@@ -15,7 +15,7 @@ Ext.define('SD.util.Launcher',{
         SlideDeck = this;
         SlideDeckonLoad(this);
     },
-    onLoad:Ext.emptyFn,
+    
     getRepository:function(){
         return this.repo;
     },

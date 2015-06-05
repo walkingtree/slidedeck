@@ -34,10 +34,5 @@ Ext.application({
         'TreePanel',
         'ContentPanel'
     ],
-    name: 'SD',
-
-    launch: function() {
-        Ext.create('SD.view.MyContainer', {renderTo: Ext.getBody()});
-    }
-
+    name: 'SD'
 });

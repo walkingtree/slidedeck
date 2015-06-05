@@ -6,7 +6,6 @@
     },
     "codeClass": null,
     "userConfig": {
-        "designer|initialView": true,
         "designer|userAlias": "mycontainer",
         "designer|userClassName": "MyContainer",
         "itemId": "headerPanel",
@@ -28,7 +27,7 @@
                 "layout|region": "west",
                 "layout|split": true
             },
-            "name": "treepanel1",
+            "name": "treepanel",
             "designerId": "51af048d-b503-47e7-bee5-6ac7081746e2",
             "masterInstanceId": "4637c71b-4b07-4e2e-9a8f-b46306301fff"
         },
@@ -42,7 +41,7 @@
             "userConfig": {
                 "layout|region": "center"
             },
-            "name": "contentpanel1",
+            "name": "contentpanel",
             "designerId": "310f39f0-4d0c-4035-b12b-86316708d3f2",
             "masterInstanceId": "44f3d44e-7b24-4f92-b359-bc61304764d9"
         },

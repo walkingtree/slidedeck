@@ -25,7 +25,11 @@
         "cacheBust": false,
         "installStatus": "Not Installed",
         "sdkPath": "",
-        "projectHasEnabledWebServer": true
+        "projectHasEnabledWebServer": true,
+        "lastBuildSelection": {
+            "value": "webBuild",
+            "display": "Build web app"
+        }
     },
     "xdsVersion": "3.2.0",
     "xdsBuild": 75,
