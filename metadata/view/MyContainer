@@ -46,24 +46,6 @@
             "masterInstanceId": "44f3d44e-7b24-4f92-b359-bc61304764d9"
         },
         {
-            "type": "viewcontrollereventbinding",
-            "reference": {
-                "name": "listeners",
-                "type": "array"
-            },
-            "codeClass": null,
-            "userConfig": {
-                "fn": "onHeaderPanelResize",
-                "implHandler": [
-                    "this.handleTreePanelResponsiveness(width);"
-                ],
-                "name": "resize",
-                "scope": "me"
-            },
-            "name": "onHeaderPanelResize",
-            "designerId": "9e01f0b5-edff-4099-9f7e-4b9d612d5725"
-        },
-        {
             "type": "basicfunction",
             "reference": {
                 "name": "items",

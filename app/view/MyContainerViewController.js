@@ -15,30 +15,5 @@
 
 Ext.define('SD.view.MyContainerViewController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.mycontainer',
-
-    handleTreePanelResponsiveness: function(widthValue) {
-         var minViewportWidth = SD.view.util.Contstant.minWidthValue;
-                        var minimizeMenu = widthValue < minViewportWidth,
-                                 naviPanel = Ext.ComponentQuery.query('#breadcrumb')[0],
-                                 naviMinimizedMenu = Ext.ComponentQuery.query('#menuPanel')[0],
-                                 fstool = Ext.ComponentQuery.query('#fullScreenId')[0];
-
-                        if (minimizeMenu) {
-
-                            fstool.setHidden(false);
-                            naviPanel.show();
-                            naviMinimizedMenu.hide();
-                        }
-                        else {
-                            fstool.setHidden(true);
-                            naviMinimizedMenu.show();
-                            naviPanel.hide();
-                        }
-    },
-
-    onHeaderPanelResize: function(component, width, height, oldWidth, oldHeight, eOpts) {
-        this.handleTreePanelResponsiveness(width);
-    }
-
+    alias: 'controller.mycontainer'
 });

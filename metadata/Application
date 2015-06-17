@@ -6,6 +6,9 @@
     },
     "codeClass": null,
     "userConfig": {
+        "controllers": [
+            "Main"
+        ],
         "name": "SD",
         "requires": [
             "wtc.ux.plugin.TreeSearch",

@@ -34,5 +34,8 @@ Ext.application({
         'TreePanel',
         'ContentPanel'
     ],
+    controllers: [
+        'Main'
+    ],
     name: 'SD'
 });

@@ -28,12 +28,25 @@ Ext.define('SD.view.TreePanelViewController', {
     handleNodeSelection: function(record) {
         var finalText = null;
                var text = record.getPath('text');
-               finalText = text.split('.');
-               if(finalText.length ==1){
-                   var newVal = finalText[0].replace(/[//]/g,'');
-               }else {
-                   var newVal = finalText[1].replace(/[/]/g,' > ');
-               }
+               finalText = text.split('/');
+
+
+              var newVal='';
+                if(finalText.length==2){
+                   newVal=finalText[1];
+                }else{
+                      for(i=2;i<finalText.length;i++){
+                          var divided;
+                          if(i==2){
+                              divided=' ';
+                          }else{
+                              divided=">";
+                          }
+
+                          newVal=newVal+divided+finalText[i];
+                      }
+                }
+
                Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
 
         var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
@@ -51,6 +64,7 @@ Ext.define('SD.view.TreePanelViewController', {
 
         if(record.data.leaf){
 
+            Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(false);
            var newString = textString.substr(0,textString.indexOf('.md'));
            this.redirectTo(''+newString);
 
@@ -83,6 +97,7 @@ Ext.define('SD.view.TreePanelViewController', {
 
         } else {
 
+            Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(true);
            this.redirectTo(''+textString);
 
            //It is a parent node...just create a dummy slide content from the node text

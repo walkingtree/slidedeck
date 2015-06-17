@@ -1,0 +1,54 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "Main"
+    },
+    "name": "MyController",
+    "designerId": "006bab63-4853-474c-bcfc-17cacf73443c",
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "widthValue"
+                ],
+                "fn": "handleTreePanelResponsivness",
+                "implHandler": [
+                    "if(Ext.isEmpty(widthValue)){",
+                    "   widthValue=window.innerWidth;",
+                    "}",
+                    "",
+                    "var minViewportWidth = SD.view.util.Contstant.minWidthValue;",
+                    "               var minimizeMenu = widthValue < minViewportWidth,",
+                    "                        naviPanel = Ext.ComponentQuery.query('#breadcrumb')[0],",
+                    "                        naviMinimizedMenu = Ext.ComponentQuery.query('#menuPanel')[0],",
+                    "                        fstool = Ext.ComponentQuery.query('#fullScreenId')[0];",
+                    "",
+                    "               if (minimizeMenu) {",
+                    "",
+                    "                   fstool.setHidden(false);",
+                    "                   naviPanel.show();",
+                    "                   naviMinimizedMenu.hide();",
+                    "               }",
+                    "               else {",
+                    "                   fstool.setHidden(true);",
+                    "                   naviMinimizedMenu.show();",
+                    "                   naviPanel.hide();",
+                    "               }"
+                ]
+            },
+            "name": "handleTreePanelResponsivness",
+            "designerId": "3c25c2a8-6f79-4de2-bcd8-7644646c0f85"
+        }
+    ]
+}

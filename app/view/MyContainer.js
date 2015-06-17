@@ -19,13 +19,11 @@ Ext.define('SD.view.MyContainer', {
 
     requires: [
         'SD.view.MyContainerViewModel',
-        'SD.view.MyContainerViewController',
         'SD.view.TreePanel',
         'SD.view.ContentPanel',
         'Ext.tree.Panel'
     ],
 
-    controller: 'mycontainer',
     viewModel: {
         type: 'mycontainer'
     },
@@ -43,9 +41,6 @@ Ext.define('SD.view.MyContainer', {
             region: 'center'
         }
     ],
-    listeners: {
-        resize: 'onHeaderPanelResize'
-    },
 
     initComponent: function(config) {
 

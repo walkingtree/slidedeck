@@ -21,6 +21,13 @@ Ext.define('SD.util.Launcher',{
     },
     init:function(accessToken,userName,repoName,renderTo){
 
+        window.addEventListener("resize",function(){
+           console.log('Reached-10');
+           //var div=document.getElement
+
+           SD.app.getController('Main').handleTreePanelResponsivness();
+        });
+        
         console.log("Token:"+accessToken+"uNam:"+userName+"repoName:"+repoName+"renderTo:"+renderTo);
         console.log("this accessToken:"+this.accessToken);
         console.log("this repoName:"+this.repoName);
