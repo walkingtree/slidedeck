@@ -14,22 +14,22 @@ This can be used to create slidedeck for all your presentations.
 
 	**cd <app root directory>/build/production/SD**
 	
-3. Create empty JS file with name slidedeck.js and save.
+3. Create empty JS file with name slidedeck.js and save. ( This file contains the the details for loading the JS and css files requied for slidedeck app) 
 	
 	**touch slidedeck.js**
 	
-4. Open the index.html file and copy the content between tag
+4. Open the index.html file and copy the content between tag (index.html file created as part of production build)
 
 	**<script type="text/javascript"> ...... </script>**
 	
 	paste this content in slidedeck.js file which is created in previous step
 	
-5. Open the slidedeck.js file, search for "app.json" (Including double quotes) and replace with following content and save.
+5. Open the slidedeck.js file, search for "app.json" (Including double quotes) and replace with following content and save. ( app.json holds the details for js and css files, to avoid the additional file add direct path for js and css as below)
 
 ```javascript
 	{"css":[{"path":"resources/SD-all.css"}],"js":[{"path":"app.js"}],}
 ```	
-6. Create new file with following content and save as test.html
+6. Create new file with following content and save as test.html ( To luanch the slidedeck app)
 
 ```html
 
