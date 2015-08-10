@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+
+<html manifest="" lang="en-US">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <title>SlideDeck</title>
+    <!-- The line below must be kept intact for Sencha Command to build your application -->
+    <script id="microloader" type="text/javascript" src="bootstrap.js"></script>
+    <script>  
+      SlideDeckonLoad=function(){SlideDeck.init('9444e2555f402e0a7cf88ec1e2373ec9741f2e03','ajit-kumar-azad','training','newDiv');};
+    </script>
+    
+</head>
+<body>
+<div id="newDiv" style="height:1100px;width:1400px;">
+</div>
+<script type="text/javascript">
+	
+	var myWidth;
+var myHeight;
+
+if( typeof( window.innerWidth ) == 'number' ) { 
+
+//Non-IE 
+
+myWidth = window.innerWidth;
+myHeight = window.innerHeight; 
+
+} else if( document.documentElement && 
+
+( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) { 
+
+//IE 6+ in 'standards compliant mode' 
+
+myWidth = document.documentElement.clientWidth; 
+myHeight = document.documentElement.clientHeight; 
+
+} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) { 
+
+//IE 4 compatible 
+
+myWidth = document.body.clientWidth; 
+myHeight = document.body.clientHeight; 
+
+}
+document.getElementById("newDiv").style.height = myHeight+'px';
+document.getElementById("newDiv").style.width = myWidth+'px';
+</script>
+
+</body>
+</html>

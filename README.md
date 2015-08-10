@@ -29,7 +29,7 @@ This can be used to create slidedeck for all your presentations.
 ```javascript
 	{"css":[{"path":"resources/SD-all.css"}],"js":[{"path":"app.js"}],}
 ```	
-6. Create new file with following content and save as test.html ( To luanch the slidedeck app)
+6. Create new file with following content and save as  thirdparty.html ( To luanch the slidedeck app)
 
 ```html
 
@@ -48,9 +48,41 @@ This can be used to create slidedeck for all your presentations.
 <body> 
 <div id="newDiv" style="height:1100px;width:1400px;">
 </div>
+<script type="text/javascript">
+	
+	var myWidth;
+var myHeight;
+
+if( typeof( window.innerWidth ) == 'number' ) { 
+
+//Non-IE 
+
+myWidth = window.innerWidth;
+myHeight = window.innerHeight; 
+
+} else if( document.documentElement && 
+
+( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) { 
+
+//IE 6+ in 'standards compliant mode' 
+
+myWidth = document.documentElement.clientWidth; 
+myHeight = document.documentElement.clientHeight; 
+
+} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) { 
+
+//IE 4 compatible 
+
+myWidth = document.body.clientWidth; 
+myHeight = document.body.clientHeight; 
+
+}
+document.getElementById("newDiv").style.height = myHeight+'px';
+document.getElementById("newDiv").style.width = myWidth+'px';
+</script>
 </body>
 </html>
 ```
 
 
-7. Open the test.html file in browser, you will see that slidedecl application is launched successfully.
+7. Open the thirdparty.html file in browser, you will see that slidedecl application is launched successfully.

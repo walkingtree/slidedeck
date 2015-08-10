@@ -4,6 +4,7 @@ Ext.define('SD.util.Launcher',{
     repo:null,
     github:null,    
     accessToken:null,
+    count:1,
     userName:null,
     repoName:null,
     initComponent:function(){
@@ -45,10 +46,12 @@ Ext.define('SD.util.Launcher',{
         this.repo = this.github.getRepo(this.userName,this.repoName);   
         console.log("afer this repo:"+this.repo);
         console.log("after this github:"+this.github);
+        if(this.count===1){
         this.repo.show(function(err, repo) {
             Ext.create('SD.view.MyContainer',{renderTo:renderTo,height:'100%',width:'100%'});
         });
-
+        }
+        this.count=2;
 
     }
 
