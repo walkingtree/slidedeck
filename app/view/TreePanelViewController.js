@@ -47,7 +47,7 @@ Ext.define('SD.view.TreePanelViewController', {
                       }
                 }
 
-               Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
+               //Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
 
         var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
         var text=treePnl.getStore().getRootNode();

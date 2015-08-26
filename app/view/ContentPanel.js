@@ -100,6 +100,6 @@ Ext.define('SD.view.ContentPanel', {
     itemId: 'contentPanel1',
     scrollable: true,
     layout: 'fit',
-    bodyPadding: 5
+    bodyPadding: 11
 
 });
