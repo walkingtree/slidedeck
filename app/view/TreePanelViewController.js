@@ -27,27 +27,27 @@ Ext.define('SD.view.TreePanelViewController', {
 
     handleNodeSelection: function(record) {
         var finalText = null;
-               var text = record.getPath('text');
-               finalText = text.split('/');
+        var text = record.getPath('text');
+        finalText = text.split('/');
 
 
-              var newVal='';
-                if(finalText.length==2){
-                   newVal=finalText[1];
+        var newVal='';
+        if(finalText.length==2){
+            newVal=finalText[1];
+        }else{
+            for(i=2;i<finalText.length;i++){
+                var divided;
+                if(i==2){
+                    divided=' ';
                 }else{
-                      for(i=2;i<finalText.length;i++){
-                          var divided;
-                          if(i==2){
-                              divided=' ';
-                          }else{
-                              divided=">";
-                          }
-
-                          newVal=newVal+divided+finalText[i];
-                      }
+                    divided=">";
                 }
 
-               //Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
+                newVal=newVal+divided+finalText[i];
+            }
+        }
+
+        Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
 
         var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
         var text=treePnl.getStore().getRootNode();
@@ -65,49 +65,52 @@ Ext.define('SD.view.TreePanelViewController', {
         if(record.data.leaf){
 
             Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(false);
-           var newString = textString.substr(0,textString.indexOf('.md'));
-           this.redirectTo(''+newString);
+            var newString = textString.substr(0,textString.indexOf('.md'));
+            this.redirectTo(''+newString);
 
-           Ext.getCmp('content-pnl').mask('loading');
+            Ext.getCmp('content-pnl').mask('loading');
 
-           var path = record.data.blobpath;
-           var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
+            var path = record.data.blobpath;
+            var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
 
-           //TODO: This needs ceanup. We need to get rid of the user name in the pen
-           var html = "<iframe height='268' scrolling='no' src='http://codepen.io/ajit-kumar-azad/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/ajit-kumar-azad/pen/{hash}/'>{hash}</a> by Ajit Kumar (<a href='http://codepen.io/ajit-kumar-azad'>@ajit-kumar-azad</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
-           var tpl =  Ext.dom.Helper.createTemplate(html);
-           ghUtil.getFileContent('master', path, function(err, data) {
+            //handle '?', if any
+            path = path.replace(/\?/g, "%3F");
 
-               var el = Ext.dom.Helper.createDom(data);
-               var domEl = Ext.get(el);
-               var hash = domEl.getAttribute('data-slug-hash');
-               var header = '<div class="slide head"><span class="logo"></span><h3>' + record.parentNode.data.text + '</h3><h2 class="slide">' + record.data.text + '</h2></div>';
-               Ext.getCmp('content-pnl').setHtml(header + data);
-               Ext.getCmp('content-pnl').addCls('markdown-body');
+            //TODO: This needs cleanup. We need to get rid of the user name in the pen
+            var html = "<iframe height='268' scrolling='no' src='http://codepen.io/ajit-kumar-azad/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/ajit-kumar-azad/pen/{hash}/'>{hash}</a> by Ajit Kumar (<a href='http://codepen.io/ajit-kumar-azad'>@ajit-kumar-azad</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
+            var tpl =  Ext.dom.Helper.createTemplate(html);
+            ghUtil.getFileContent('master', path, function(err, data) {
 
-               //TODO: This needs ceanup. We need to get rid of the user name in the pen
-               var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');
-               for (var i = 0; i < elArr.length; i++) {
-                   el = elArr[i];
-                   tpl.overwrite(Ext.get(el).parent(), {hash: Ext.get(el).getAttribute('text')});
-               }
-               Ext.getCmp('content-pnl').unmask();
-           });
+                var el = Ext.dom.Helper.createDom(data);
+                var domEl = Ext.get(el);
+                var hash = domEl.getAttribute('data-slug-hash');
+                var header = '<div class="slide head"><span class="logo"></span><h3>' + record.parentNode.data.text + '</h3><h2 class="slide">' + record.data.text + '</h2></div>';
+                Ext.getCmp('content-pnl').setHtml(header + data);
+                Ext.getCmp('content-pnl').addCls('markdown-body');
+
+                //TODO: This needs ceanup. We need to get rid of the user name in the pen
+                var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');
+                for (var i = 0; i < elArr.length; i++) {
+                    el = elArr[i];
+                    tpl.overwrite(Ext.get(el).parent(), {hash: Ext.get(el).getAttribute('text')});
+                }
+                Ext.getCmp('content-pnl').unmask();
+            });
 
 
         } else {
 
             Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(true);
-           this.redirectTo(''+textString);
+            this.redirectTo(''+textString);
 
-           //It is a parent node...just create a dummy slide content from the node text
+            //It is a parent node...just create a dummy slide content from the node text
 
-           //TODO: Make this configurable
-           var html = '<div class="topic"><div class="head"><h1>' + record.data.text + '</h1></div><div class="footer">' +
-               '2008 — 2015 Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
-               'participant in a technical training course.  Any other use or reproduction of this document is ' +
-               'unlawful without the express written consent of Walking Tree Consultancy Services Pvt. Ltd.</div></div>';
-           Ext.getCmp('content-pnl').setHtml(html);
+            //TODO: Make this configurable
+            var html = '<div class="topic"><div class="head"><h1>' + record.data.text + '</h1></div><div class="footer">' +
+                '2008 — 2015 Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
+                'participant in a technical training course.  Any other use or reproduction of this document is ' +
+                'unlawful without the express written consent of Walking Tree Consultancy Services Pvt. Ltd.</div></div>';
+            Ext.getCmp('content-pnl').setHtml(html);
 
         }
 
