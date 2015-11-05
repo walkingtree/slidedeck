@@ -1,6 +1,4 @@
----
-title: Module Wise Implementation
-...
+# Module Wise Implementation
 
 Introduction
 
