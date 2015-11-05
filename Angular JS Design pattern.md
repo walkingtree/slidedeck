@@ -34,41 +34,27 @@ this, but here are two examples:
 **(a) Routing**
 
 Instead of something like this for a /**myaccount** route:
-
+```html
 |-- src/
-
 | |-- scripts/
-
 | | |-- controllers/
-
 | | | |-- myaccount.js
-
 | |-- test/
-
 | | |-- spec/
-
 | | | |-- controllers/
-
 | | | | |-- myaccount.js
-
 | |-- views/
-
 | | |-- myaccount.html
-
+...
 I'd prefer to see it like this:
-
+```html
 |-- src/
-
 | |-- app/
-
 | | |-- myaccount /
-
 | | | |-- myaccount.js
-
 | | | |-- myaccount.spec.js
-
 | | | |-- myaccount.tpl.html
-
+...
 This is a much simpler directory structure, but makes the
 “**myaccount”** module very portable. It is also self-contained: it can
 be totally refactored without impacting the rest of the application.
@@ -86,27 +72,18 @@ be) inter-related. It demands manually surfing through the code and/or
 doing searches for component names.
 
 A cleaner directory structure would look something like this:
-
+```javascript
 |-- src/
-
 | |-- components/
-
 | | |-- editor/
-
 | | | |-- editing.js
-
 | | | |-- editor.js
-
 | | | |-- editor.spec.js
-
 | | | |-- editingStorage.js
-
 | | | |-- editingStorage.spec.js
-
 | | | |-- editingRender.js
-
 | | | |-- editingRender.spec.js
-
+...
 Now it's pretty clear we're talking about one component, albeit a
 complex one that spans multiple layers. But each sub-component of the
 editor is still standalone, if need be - that's just good programming.
@@ -116,89 +93,62 @@ editor is still standalone, if need be - that's just good programming.
 A logical extension of this reorganization is to so-define our modules.
 In this pattern, each directory roughly corresponds to a module. Instead
 of this:
-
+```javascript
 angular.module( 'myApp' )
-
 .controller( 'HomeCtrl', function (\$scope) {
-
 // ...
-
 });
-
+...
 We would have this:
-
+```javascript
 angular.module( 'home', \[\] )
-
 .controller('HomeCtrl', function (\$scope) {
-
 // ...
-
 });
-
+...
 Similarly for the editing component:
-
+```javascript
 angular.module( 'editor', \[
-
 'editing.editor',
-
 'editing.editingStorage',
-
 'editing.editingRender'
-
 \])
-
+...
 Where those modules are defined in their respective files. And our main
 app.js file simply requires the top-level modules:
-
+```javascript
 angular.module( 'myApp', \[
-
 'home',
-
 'editing'
-
 \]);
-
+...
 **Modularized Routing**
 
 Using the above example, yo angular:route home would generate this:
-
+```html
 |-- src/
-
 | |-- app/
-
 | | |-- home/
-
 | | | |-- home.js
-
 | | | |-- home.spec.js
-
 | | | |-- home.tpl.html
-
+...
 But instead of defining the route in app.js, we would let the home
 module set up its own routing:
-
+```javascript
 angular.module( 'home', \[\] )
-
 .config( function ( \$routeProvider ) {
-
 \$routeProvider
-
 .when( '/home', {
-
 templateUrl: 'home/home.tpl.html',
-
 controller: 'HomeCtrl'
-
 });
-
 })
 
 .controller( 'HomeCtrl', function ( \$scope ) {
-
 // ...
-
 })
-
+...
 Nothing is required in the app.js in terms of routing, unless the user
 should choose to define a default redirect, such as to /home.
 
@@ -211,27 +161,18 @@ component they implement and use adjacent templates and tests, it also
 makes sense to be able to nest them.
 
 Considering the route example:
-
+```html
 |-- src/
-
 | |-- app/
-
 | | |-- products/
-
 | | | |-- products.js
-
 | | | |-- products.spec.js
-
 | | | |-- products.tpl.html
-
 | | | |-- create/
-
 | | | | |-- create.js
-
 | | | | |-- create.tpl.html
-
 | | | |-- ...
-
+...
 In this case, each directory should roughly correspond to a single
 "submodule". The products directory is a module called products, making
 create something like products.create. Using this pattern, the products
