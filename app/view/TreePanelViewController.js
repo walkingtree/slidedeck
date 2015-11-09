@@ -77,7 +77,7 @@ Ext.define('SD.view.TreePanelViewController', {
             path = path.replace(/\?/g, "%3F");
 
             //TODO: This needs cleanup. We need to get rid of the user name in the pen
-            var html = "<iframe height='268' scrolling='no' src='http://codepen.io/ajit-kumar-azad/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/ajit-kumar-azad/pen/{hash}/'>{hash}</a> by Ajit Kumar (<a href='http://codepen.io/ajit-kumar-azad'>@ajit-kumar-azad</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
+            var html = "<iframe height='268' scrolling='no' src='http://codepen.io/walkingtree/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walkingtree (<a href='http://codepen.io/walkingtree'>@walkingtree</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
             var tpl =  Ext.dom.Helper.createTemplate(html);
             ghUtil.getFileContent('master', path, function(err, data) {
 
@@ -89,7 +89,7 @@ Ext.define('SD.view.TreePanelViewController', {
                 Ext.getCmp('content-pnl').addCls('markdown-body');
 
                 //TODO: This needs ceanup. We need to get rid of the user name in the pen
-                var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/ajit-kumar-azad/pen]');
+                var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/walkingtree/pen]');
                 for (var i = 0; i < elArr.length; i++) {
                     el = elArr[i];
                     tpl.overwrite(Ext.get(el).parent(), {hash: Ext.get(el).getAttribute('text')});
