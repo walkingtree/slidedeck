@@ -21,7 +21,8 @@ Ext.define('SD.view.MyContainer', {
         'SD.view.MyContainerViewModel',
         'SD.view.TreePanel',
         'SD.view.ContentPanel',
-        'Ext.tree.Panel'
+        'Ext.tree.Panel',
+        'Ext.plugin.Responsive'
     ],
 
     viewModel: {
@@ -34,7 +35,16 @@ Ext.define('SD.view.MyContainer', {
         {
             xtype: 'treepanel',
             region: 'west',
-            split: true
+            split: true,
+            plugins: 'responsive',
+            responsiveConfig: {
+                'width >= 800': {
+                    visible: true
+                },
+                'width < 800': {
+                    visible: false
+                }
+            }
         },
         {
             xtype: 'contentpanel',

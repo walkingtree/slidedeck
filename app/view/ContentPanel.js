@@ -19,7 +19,8 @@ Ext.define('SD.view.ContentPanel', {
 
     requires: [
         'SD.view.ContentPanelViewModel',
-        'SD.view.ContentPanelViewController'
+        'SD.view.ContentPanelViewController',
+        'Ext.plugin.Responsive'
     ],
 
     config: {
@@ -37,6 +38,15 @@ Ext.define('SD.view.ContentPanel', {
                     publishes: 'selection',
                     bind: {
                         store: '{MenuStore}'
+                    },
+                    plugins: 'responsive',
+                    responsiveConfig: {
+                        'width >= 800': {
+                            visible: false
+                        },
+                        'width < 800': {
+                            visible: true
+                        }
                     }
                 },
                 {
