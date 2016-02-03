@@ -160,7 +160,15 @@ Ext.define('SD.view.TreePanelViewController', {
         var st = treePnl.getStore();
 
         var treeData = ghUtil.getTree('master',function(tree,component){
-            st.setRootNode(tree[0]);
+            
+            for(i=0; i<tree.length; i++) {
+                console.log(tree[i]['path']);
+                if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] == 'Enterprise-App-Development-with-AngularJS')) {
+                    st.setRootNode(tree[i]);
+                    console.log(i);
+                    console.log(tree[i]['path']);
+                }
+            }
             treePnl.collapseAll();
             if (treePnl.getRootNode().hasChildNodes()) {
                 treePnl.getRootNode().expand();
