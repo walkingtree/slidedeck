@@ -161,9 +161,9 @@ Ext.define('SD.view.TreePanelViewController', {
 
         var treeData = ghUtil.getTree('master',function(tree,component){
             
-            for(i=0; i<tree.length; i++) {
+            for(var i=0; i<tree.length; i++) {
                 console.log(tree[i]['path']);
-                if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] == 'Enterprise-App-Development-with-AngularJS')) {
+                if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === 'Enterprise-App-Development-with-AngularJS')) {
                     st.setRootNode(tree[i]);
                     console.log(i);
                     console.log(tree[i]['path']);
