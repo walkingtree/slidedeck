@@ -22,22 +22,27 @@ Ext.define('SD.controller.Main', {
         }
 
         var minViewportWidth = SD.view.util.Contstant.minWidthValue;
-                       var minimizeMenu = widthValue < minViewportWidth,
-                                naviPanel = Ext.ComponentQuery.query('#breadcrumb')[0],
-                                naviMinimizedMenu = Ext.ComponentQuery.query('#menuPanel')[0],
-                                fstool = Ext.ComponentQuery.query('#fullScreenId')[0];
+        var minimizeMenu = widthValue < minViewportWidth,
+                 naviPanel = Ext.ComponentQuery.query('#breadcrumb')[0],
+                 naviMinimizedMenu = Ext.ComponentQuery.query('#menuPanel')[0],
+                 fstool = Ext.ComponentQuery.query('#fullScreenId')[0];
 
-                       if (minimizeMenu) {
-
-                           fstool.setHidden(false);
-                           naviPanel.show();
-                           naviMinimizedMenu.hide();
-                       }
-                       else {
-                           fstool.setHidden(true);
-                           naviMinimizedMenu.show();
-                           naviPanel.hide();
-                       }
+        if (minimizeMenu) {
+            fstool.setHidden(false);
+            naviPanel.show();
+            //naviMinimizedMenu.hide();
+        }
+        else {
+            fstool.setHidden(true);
+            //naviMinimizedMenu.show();
+            naviPanel.hide();
+        }
+        
+        /*Moved tree responsive config in this function as tree alreday using the search plugin*/
+        if (widthValue >= 800)
+            naviMinimizedMenu.setVisible(true);
+        else
+            naviMinimizedMenu.setVisible(false);
     }
 
 });

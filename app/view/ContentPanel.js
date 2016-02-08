@@ -27,6 +27,7 @@ Ext.define('SD.view.ContentPanel', {
         dockedItems: {
             xtype: 'toolbar',
             dock: 'top',
+            padding: '5 0 0 0',
             itemid: 'contentPanel',
             layout: 'auto',
             items: [
@@ -53,6 +54,7 @@ Ext.define('SD.view.ContentPanel', {
                     xtype: 'panel',
                     itemId: 'contentPanel',
                     title: 'Content',
+                    margin: '11',
                     bind: {
                         title: '{breadcrumb.selection.text}'
                     },
@@ -109,7 +111,7 @@ Ext.define('SD.view.ContentPanel', {
     id: 'content-pnl',
     itemId: 'contentPanel1',
     scrollable: true,
-    layout: 'fit',
-    bodyPadding: 11
+    layout: 'fit'/*,
+    bodyPadding: 11*/
 
 });

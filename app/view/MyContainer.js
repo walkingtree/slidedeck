@@ -36,13 +36,13 @@ Ext.define('SD.view.MyContainer', {
             xtype: 'treepanel',
             region: 'west',
             split: true,
-            plugins: 'responsive',
-            responsiveConfig: {
-                'width >= 800': {
-                    visible: true
-                },
-                'width < 800': {
-                    visible: false
+            listeners: {
+                'afterrender': function (tree, eOpt) {
+                    var width = window.innerWidth;
+                    if (width >= 800)
+                        tree.setVisible(true);
+                    else
+                        tree.setVisible(false);
                 }
             }
         },

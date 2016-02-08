@@ -150,6 +150,7 @@
 
 div.slide.head {
     color: #157fcc;
+    padding-left: 11px !important;
 }
 
 div.slide.head h3 {
@@ -829,5 +830,9 @@ ii.
   z-index: 1;
   position: relative;
   border-color: #4183c4;
+}
+
+.announce.instapaper_body.md {
+    padding-left: 11px !important;
 }
 

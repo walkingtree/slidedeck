@@ -107,7 +107,7 @@ Ext.define('SD.view.TreePanelViewController', {
 
             //TODO: Make this configurable
             var html = '<div class="topic"><div class="head"><h1>' + record.data.text + '</h1></div><div class="footer">' +
-                '2008 — 2015 Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
+                '2008 — ' + this.getCurrentYear() + ' Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
                 'participant in a technical training course.  Any other use or reproduction of this document is ' +
                 'unlawful without the express written consent of Walking Tree Consultancy Services Pvt. Ltd.</div></div>';
             Ext.getCmp('content-pnl').setHtml(html);
@@ -232,6 +232,10 @@ Ext.define('SD.view.TreePanelViewController', {
                 treePnl.getController().onTreeItemClick('',record);
             }
         }
+    },
+    
+    getCurrentYear: function () {
+        var date = new Date();
+        return date.getFullYear();
     }
-
 });
