@@ -37,12 +37,14 @@ Ext.define('SD.view.MyContainer', {
             region: 'west',
             split: true,
             listeners: {
-                'afterrender': function (tree, eOpt) {
+                'afterrender': function (tree) {
                     var width = window.innerWidth;
-                    if (width >= 800)
+                    if (width >= 800) {
                         tree.setVisible(true);
-                    else
+                    }
+                    else {
                         tree.setVisible(false);
+                    }
                 }
             }
         },

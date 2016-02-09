@@ -27,7 +27,7 @@ Ext.define('SD.view.ContentPanel', {
         dockedItems: {
             xtype: 'toolbar',
             dock: 'top',
-            padding: '5 0 0 0',
+            padding: '0 0 0 0',
             itemid: 'contentPanel',
             layout: 'auto',
             items: [

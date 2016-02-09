@@ -39,10 +39,12 @@ Ext.define('SD.controller.Main', {
         }
         
         /*Moved tree responsive config in this function as tree alreday using the search plugin*/
-        if (widthValue >= 800)
+        if (widthValue >= 800) {
             naviMinimizedMenu.setVisible(true);
-        else
+        }
+        else {
             naviMinimizedMenu.setVisible(false);
+        }
     }
 
 });
