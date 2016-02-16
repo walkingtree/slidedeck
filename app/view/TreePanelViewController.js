@@ -18,6 +18,7 @@ Ext.define('SD.view.TreePanelViewController', {
     alias: 'controller.treepanel',
 
     requires: [
+        'SD.util.Launcher',
         'Ext.app.route.Route'
     ],
 
@@ -160,10 +161,11 @@ Ext.define('SD.view.TreePanelViewController', {
         var st = treePnl.getStore();
 
         var treeData = ghUtil.getTree('master',function(tree,component){
-            
+            var gitDirName = SD.util.Launcher.getDirectoryName();
+            //console.log(gitDirName + '  before loop');
             for(var i=0; i<tree.length; i++) {
-                console.log(tree[i]['path']);
-                if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === 'Enterprise-App-Development-with-AngularJS')) {
+                console.log(tree[i]['path'] + '   ' + gitDirName);
+                if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === gitDirName)) {
                     st.setRootNode(tree[i]);
                     console.log(i);
                     console.log(tree[i]['path']);

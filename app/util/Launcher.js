@@ -7,6 +7,7 @@ Ext.define('SD.util.Launcher',{
     count:1,
     userName:null,
     repoName:null,
+    repoDirName: null,
     initComponent:function(){
         this.callParent(arguments);
     },
@@ -20,8 +21,7 @@ Ext.define('SD.util.Launcher',{
     getRepository:function(){
         return this.repo;
     },
-    init:function(accessToken,userName,repoName,renderTo){
-
+    init:function(accessToken,userName,repoName,renderTo, dirName){
         window.addEventListener("resize",function(){
            console.log('Reached-10');
            //var div=document.getElement
@@ -38,6 +38,13 @@ Ext.define('SD.util.Launcher',{
         this.accessToken = accessToken;
         this.repoName = repoName;
         this.userName = userName;
+        
+        if (Ext.isDefined(dirName)) {
+            this.repoDirName = dirName;
+        } else {
+            this.repoDirName = 'Enterprise-App-Development-with-AngularJS'; /*To Launch slidedeck stand alone*/
+        }
+        
 
         this.github = new Github({
             token: this.accessToken,
@@ -53,6 +60,10 @@ Ext.define('SD.util.Launcher',{
         }
         this.count=2;
 
+    },
+    
+    getDirectoryName: function () {
+        return this.repoDirName;
     }
 
 });
