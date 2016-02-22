@@ -39,11 +39,34 @@ Ext.define('SD.store.MenuStore', {
                 sorterFn: function(first, second) {
                     var num1 = new Number(first.data.text.split('.')[0]),
                         num2 = new Number(second.data.text.split('.')[0]);
-
+                
                     // console.log('num1: ' + num1 + ' : num2: ' + num2);
 
                     return num1.valueOf() > num2.valueOf() ? 1 : (num1 === num2) ? 0 : -1;
                 }
+            },
+            
+            findNode: function (property, value, startsWith, endsWith, ignoreCase) {
+                if (Ext.isEmpty(value, false)) {
+                    return null;
+                }
+
+                if (value === this.model.idProperty && arguments.length < 3) {
+                    return this.byIdMap[value];
+                }
+                var regex = Ext.String.createRegex(value, startsWith, endsWith, ignoreCase),
+                        result = null;
+                Ext.Object.eachValue(this.byIdMap, function (node) {
+                    if (node && regex.test(node.get(property))) {
+                        result = node;
+                        var nodeValue = Ext.String.trim(result.data.text.split('.')[1]);
+                        nodeValue = Ext.util.Format.lowercase(nodeValue);
+                        if(nodeValue === value) {
+                            return false;
+                        }
+                    }
+                });
+                return result;
             }
         }, cfg)]);
     }

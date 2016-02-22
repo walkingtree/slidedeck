@@ -35,7 +35,19 @@ Ext.define('SD.view.TreePanel', {
     title: 'Topics',
     titleCollapse: true,
     store: 'MenuStore',
-    lines: false,
+    lines: false,    
+    hideHeaders: true,
+    
+    columns: [{
+        xtype: 'treecolumn',
+        flex: 1,
+        dataIndex: 'text',
+        renderer: function (a, b, c) {
+            console.log(b);
+            c.data.findAnchorText = a.split('. ')[1];
+            return a;
+        }
+    }],
 
     viewConfig: {
         itemId: 'treeMenu',

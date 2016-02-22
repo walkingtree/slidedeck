@@ -113,5 +113,23 @@ Ext.define('SD.view.ContentPanel', {
     scrollable: true,
     layout: 'fit'/*,
     bodyPadding: 11*/
+    ,listeners: { /*added listeners to handle to anchore tag click event*/
+        click: {
+            element: 'el',
+            preventDefault: true,
+            fn: function (e, target) {
+                var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
+                var store = treePnl.getStore();
+                var treePnlController = treePnl.getController();
+                if (target.tagName === 'A') {
+                    var nodeText = target.text;
+                    var nodeToSelect = store.findNode("findAnchorText", nodeText);
+                    var treeParentNode = nodeToSelect.parentNode;
+                    treeParentNode.expand(true);
+                    treePnlController.onTreeItemClick(treePnl, nodeToSelect);
+                }
+            }
+        }
+    }
 
 });
