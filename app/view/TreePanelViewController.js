@@ -25,29 +25,44 @@ Ext.define('SD.view.TreePanelViewController', {
     routes: {
         '#': 'processRout'
     },
-
-    handleNodeSelection: function(record) {
-        var finalText = null;
+    
+    handleNodeSelection: function(record) { 
+        
+        var finalText = null, newVal='';
         var text = record.getPath('text');
-        finalText = text.split('/');
+        if(SD.util.Launcher.diffType == 'file') // changes Done by seema
+          {
+            // here we have to convert the html text to string Eg : <a...></a>Overview
+            text = SD.util.Launcher.htmlToString(text);
+            finalText = text.split('/');
+             for(i=1;i<finalText.length;i++){
+                    var divided;
+                    if(i==1){
+                        divided=' ';
+                    }else{
+                        divided=">";
+                    }
+                    newVal=newVal+divided+finalText[i];
+                  }
+          }else{
+               finalText = text.split('/');
+            if(finalText.length==2){
+                newVal=finalText[1];
+            }else{
+                for(i=2;i<finalText.length;i++){
+                    var divided;
+                    if(i==2){
+                        divided=' ';
+                    }else{
+                        divided=">";
+                    }
 
-
-        var newVal='';
-        if(finalText.length==2){
-            newVal=finalText[1];
-        }else{
-            for(i=2;i<finalText.length;i++){
-                var divided;
-                if(i==2){
-                    divided=' ';
-                }else{
-                    divided=">";
+                    newVal=newVal+divided+finalText[i];
+                  }
                 }
-
-                newVal=newVal+divided+finalText[i];
-            }
-        }
-
+          }
+        
+        
         Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
 
         var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
@@ -57,13 +72,12 @@ Ext.define('SD.view.TreePanelViewController', {
         }
         var blobPath=record.get('blobpath');
         var textString=blobPath.substr(textR.length+1,blobPath.length);
-
-
+        
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
         bcTitle.setSelection(record);
 
 
-        if(record.data.leaf){
+        if(record.data.leaf && SD.util.Launcher.diffType != 'file'){ // checking the condition for leaf true and not for the .md file
 
             Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(false);
             var newString = textString.substr(0,textString.indexOf('.md'));
@@ -99,20 +113,44 @@ Ext.define('SD.view.TreePanelViewController', {
             });
 
 
-        } else {
+        }else if(record.data.leaf && SD.util.Launcher.diffType == 'file'){  // checking the condition for leaf true and  for the .md file
+        
+                Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(false);
+                this.redirectTo(''+record.data.text);
+                
+                //TODO: This needs cleanup. We need to get rid of the user name in the pen
+                var html = "<iframe height='268' scrolling='no' src='http://codepen.io/walkingtree/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walkingtree (<a href='http://codepen.io/walkingtree'>@walkingtree</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
+                var tpl =  Ext.dom.Helper.createTemplate(html);
+                var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
+                var text=treePnl.getStore().getRootNode();
+                if(text){
+                    textR=text.get('text');
+                }
+                var el = Ext.dom.Helper.createDom('<div class="announce instapaper_body md" data-path="putting sencha mvvm architecture into practice/Design Considerations" id="file"><article class="markdown-body entry-content" itemprop="text">'+record.data.displayText+'</article></div>');
+                var domEl = Ext.get(el);
+                var hash = domEl.getAttribute('data-slug-hash');
+                var header = '<div class="slide head"><span class="logo"></span><h3>' + record.parentNode.data.text + '</h3><h2 class="slide">' + record.data.text + '</h2></div>';
+                Ext.getCmp('content-pnl').setHtml(header + '<div class="announce instapaper_body md" data-path="putting sencha mvvm architecture into practice/Design Considerations" id="file"><article class="markdown-body entry-content" itemprop="text">'+record.data.displayText+'</article></div>');
+                Ext.getCmp('content-pnl').addCls('markdown-body');
+                //TODO: This needs ceanup. We need to get rid of the user name in the pen
+                var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/walkingtree/pen]');
+                for (var i = 0; i < elArr.length; i++) {
+                    el = elArr[i];
+                    tpl.overwrite(Ext.get(el).parent(), {hash: Ext.get(el).getAttribute('text')});
+                }
+        }else {
 
             Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setHidden(true);
-            this.redirectTo(''+textString);
+            this.redirectTo(''+record.data.text);
 
             //It is a parent node...just create a dummy slide content from the node text
 
             //TODO: Make this configurable
-            var html = '<div class="topic"><div class="head"><h1>' + record.data.text + '</h1></div><div class="footer">' +
+            var html = '<div class="topic"><div class="head"><h1>' + record.data.text+ '</h1></div><div class="footer">' +
                 '2008 &minus; ' + this.getCurrentYear() + ' Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
                 'participant in a technical training course.  Any other use or reproduction of this document is ' +
                 'unlawful without the express written consent of Walking Tree Consultancy Services Pvt. Ltd.</div></div>';
             Ext.getCmp('content-pnl').setHtml(html);
-
         }
 
         var treePnl = Ext.ComponentQuery.query('[itemId=menuPanel]')[0];
@@ -121,31 +159,32 @@ Ext.define('SD.view.TreePanelViewController', {
         bcTitle.setSelection(record);
     },
 
-    processRout: function() {
+    processRout: function() { 
         var token = Ext.util.History.getToken();
 
         var treePnl = this.view;
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
         var st = treePnl.getStore();
         var extraToken=st.getRootNode().get('blobpath')+'/';
-        //var text=extraToken+token;
         var rec=st.findNode('blobpath',text);
         console.log(rec);
-        //var x = bcTitle.getState();
-
         var text=extraToken+token+'.md';
         var txt =extraToken+token;
-        var rec=st.findNode('blobpath',text);
+        var findFld = 'blobpath';
+        if(SD.util.Launcher.diffType == 'file') 
+        {
+            text=token+'.md';
+            txt =token;
+            findFld = 'path';
+        }
+        
+        var rec=st.findNode(findFld,text);
         if(!rec){
-           rec = st.findNode('blobpath',txt);
+           rec = st.findNode(findFld,txt);
            if(!rec){
                rec=st.getAt(0);
            }
         }
-
-
-
-
         treePnl.getSelectionModel().select(rec);
         var path = rec.getPath('text');
         bcTitle.setSelection(rec);
@@ -153,56 +192,73 @@ Ext.define('SD.view.TreePanelViewController', {
         treePnl.getController().handleNodeSelection(rec);
     },
 
-    onTreeMenuBeforeRender: function(component, eOpts) {
+    onTreeMenuBeforeRender: function(component, eOpts) { 
         var me = this;
+        if( SD.util.Launcher.diffType == 'file' ) 
+            {
+                var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
+                ghUtil.getFileContent('master', SD.util.Launcher.masterFolder+'/'+SD.util.Launcher.repoDirName, function(err, data) {
+                    SD.util.Launcher.metaData = data;
+                    me.onTreeRenderFn(component,me);
+                });
+               
+            }else{
+               me.onTreeRenderFn(component,me); 
+            }
+    },
+   onTreeRenderFn : function(component , me)
+   {
+     
         var ghUtil = Ext.create('SD.view.GitHubWrapper', {});
-        var treePnl = this.view;
+        var treePnl = me.view;
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
         var st = treePnl.getStore();
+        
+        
+                
+                var treeData = ghUtil.getTree('master',function(tree,component){
+                var gitDirName = SD.util.Launcher.getDirectoryName();
+                   //console.log(gitDirName + '  before loop');
+                   
+                    for(var i=0; i<tree.length; i++) {
+                        console.log(tree[i]['path'] + '   ' + gitDirName);
+                       
+                        if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === gitDirName)) {
+                            st.setRootNode(tree[i]);
+                            console.log(i);
+                            console.log(tree[i]['path']);
+                        }
+                    }
+                    treePnl.collapseAll();
+                    if (treePnl.getRootNode().hasChildNodes()) {
+                        treePnl.getRootNode().expand();
+                        treePnl.getController().processRout();
+                    } else {
+                        console.log('no childs');
+                    }
 
-        var treeData = ghUtil.getTree('master',function(tree,component){
-            var gitDirName = SD.util.Launcher.getDirectoryName();
-            //console.log(gitDirName + '  before loop');
-            for(var i=0; i<tree.length; i++) {
-                console.log(tree[i]['path'] + '   ' + gitDirName);
-                if((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === gitDirName)) {
-                    st.setRootNode(tree[i]);
-                    console.log(i);
-                    console.log(tree[i]['path']);
-                }
-            }
-            treePnl.collapseAll();
-            if (treePnl.getRootNode().hasChildNodes()) {
-                treePnl.getRootNode().expand();
-                treePnl.getController().processRout();
-            } else {
-                console.log('no childs');
-            }
+                    bcTitle.setStore(st);
+                    var currentNode = treePnl.getSelection()[0];
 
-            bcTitle.setStore(st);
-            var currentNode = treePnl.getSelection()[0];
+                    bcTitle.setSelection(currentNode);
+                    bcTitle.addListener('selectionchange',function(th,node,eOpts){
+                        var record = th.getSelection();
+                        var treePnl = me.view;
+                        bcTitle.setSelection(record);
+                        me.handleNodeSelection(record);
+                        treePnl.getSelectionModel().select(record);
 
-            bcTitle.setSelection(currentNode);
-            bcTitle.addListener('selectionchange',function(th,node,eOpts){
-                var record = th.getSelection();
-                var treePnl = me.view;
-                bcTitle.setSelection(record);
-                me.handleNodeSelection(record);
-                treePnl.getSelectionModel().select(record);
+                    });
 
-            });
+                    Ext.getBody().unmask();
 
-            Ext.getBody().unmask();
-
-        });
-
-
-
-    },
-
+                },SD.util.Launcher.diffType);
+        
+   },
     onTreeItemClick: function(dataview, record, item, index, e, eOpts) {
-        this.handleNodeSelection(record);
-
+        
+           this.handleNodeSelection(record);
+        
     },
 
     onTreeMenuRender: function(component, eOpts) {

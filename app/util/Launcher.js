@@ -17,7 +17,13 @@ Ext.define('SD.util.Launcher',{
         SlideDeck = this;
         SlideDeckonLoad(this);
     },
-    
+    htmlToString : function(html) // changes Done by seema
+    {
+      var span= document.createElement('span');
+      span.innerHTML= html; 
+      html = span.textContent || span.innerText;  
+      return html
+    },
     getRepository:function(){
         return this.repo;
     },
@@ -38,11 +44,20 @@ Ext.define('SD.util.Launcher',{
         this.accessToken = accessToken;
         this.repoName = repoName;
         this.userName = userName;
-        
+        this.diffType = "folder";
+        dirName = 'creating-universal-app-using-extjs6.md'; /*To Launch slidedeck stand alone*/
         if (Ext.isDefined(dirName)) {
-            this.repoDirName = dirName;
+            if( dirName.indexOf(".md")!=-1 ){
+                 this.repoDirName = dirName;
+                 this.diffType = "file"; // differentiation variable for md file and folder
+                 this.masterFolder = "sencha";
+            }else{
+                 this.repoDirName = dirName;
+            }
+            
         } else {
-            this.repoDirName = 'Enterprise-App-Development-with-AngularJS'; /*To Launch slidedeck stand alone*/
+               
+                 this.repoDirName = 'Enterprise-App-Development-with-AngularJS'; /*To Launch slidedeck stand alone*/
         }
         
 
