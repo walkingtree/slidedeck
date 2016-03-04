@@ -30,22 +30,8 @@ Ext.define('SD.view.TreePanelViewController', {
         
         var finalText = null, newVal='';
         var text = record.getPath('text');
-        if(SD.util.Launcher.diffType == 'file') // changes Done by seema
-          {
-            // here we have to convert the html text to string Eg : <a...></a>Overview
-            text = SD.util.Launcher.htmlToString(text);
+        
             finalText = text.split('/');
-             for(i=1;i<finalText.length;i++){
-                    var divided;
-                    if(i==1){
-                        divided=' ';
-                    }else{
-                        divided=">";
-                    }
-                    newVal=newVal+divided+finalText[i];
-                  }
-          }else{
-               finalText = text.split('/');
             if(finalText.length==2){
                 newVal=finalText[1];
             }else{
@@ -60,8 +46,7 @@ Ext.define('SD.view.TreePanelViewController', {
                     newVal=newVal+divided+finalText[i];
                   }
                 }
-          }
-        
+          
         
         Ext.ComponentQuery.query('[itemId=contentPanel]')[0].setTitle(newVal);
 
@@ -161,7 +146,6 @@ Ext.define('SD.view.TreePanelViewController', {
 
     processRout: function() { 
         var token = Ext.util.History.getToken();
-
         var treePnl = this.view;
         var bcTitle = Ext.ComponentQuery.query('[itemId=breadcrumb]')[0];
         var st = treePnl.getStore();
@@ -170,17 +154,9 @@ Ext.define('SD.view.TreePanelViewController', {
         console.log(rec);
         var text=extraToken+token+'.md';
         var txt =extraToken+token;
-        var findFld = 'blobpath';
-        if(SD.util.Launcher.diffType == 'file') 
-        {
-            text=token+'.md';
-            txt =token;
-            findFld = 'path';
-        }
-        
-        var rec=st.findNode(findFld,text);
+        var rec=st.findNode('blobpath',text);
         if(!rec){
-           rec = st.findNode(findFld,txt);
+           rec = st.findNode('blobpath',txt);
            if(!rec){
                rec=st.getAt(0);
            }

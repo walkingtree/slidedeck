@@ -85,7 +85,7 @@ Ext.define('SD.view.GitHubWrapper', {
                   if( node.name == SD.util.Launcher.repoDirName )
                   {
                       node = files[i];
-                      var nodename = SD.view.util.StringCleaner.cleanup(node.path);
+                      var nodename = node.name;//SD.view.util.StringCleaner.cleanup(node.path);
                       var obj1 = [];
                       obj1= this.preparingTreeFromHtml(SD.util.Launcher.metaData,obj1,nodename);
                       var niceName = Ext.util.Format.capitalize(SD.view.util.StringCleaner.cleanup(node.name)); 
@@ -124,8 +124,8 @@ Ext.define('SD.view.GitHubWrapper', {
                  endIndex = data.length;
               }
               var displayText = data.substring(BeginIndex+5,endIndex);
-              childNode = SD.util.Launcher.htmlToString(childNode);  
-              var node1 = {displayText : displayText,type:'tree',leaf:true,text:childNode,path:childNode,blobpath:SD.util.Launcher.masterFolder+'/'+nodename+"/"+childNode};
+              childNode = SD.util.Launcher.htmlToString(childNode);
+              var node1 = {displayText : displayText,type:'tree',leaf:true,text:childNode,path:childNode,blobpath:nodename+"/"+childNode};
               obj1.push(node1);
               data = data.substring(endIndex,data.length);
               this.preparingTreeFromHtml(data,obj1,nodename);
