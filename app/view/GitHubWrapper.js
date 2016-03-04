@@ -24,15 +24,27 @@ Ext.define('SD.view.GitHubWrapper', {
     ignoreList: [
         'images'
     ],
-
-    getTree: function(branchname, callback) {
+   
+    getTree: function(branchname, callback,diffType) { 
         var me=this;
         var repo=SD.util.Launcher.getRepository();
-        repo.getTree(branchname + '?recursive=true', function(err, tree) {
-             var obj=me.explodeTree(tree,'/');
-             me.data=tree;
-             callback(obj);
-        });
+       
+        if( diffType=="file" ) // sending request for md file - changes Done by seema
+        {
+            repo.read(branchname + '?recursive=true',SD.util.Launcher.masterFolder, function(err, tree) {
+                 tree = eval(tree);
+                 var obj=me.explodeTree(tree,'/');
+                 me.data=tree;
+                 callback(obj);
+            });
+            
+        }else{
+            repo.getTree(branchname + '?recursive=true', function(err, tree) {
+                 var obj=me.explodeTree(tree,'/');
+                 me.data=tree;
+                 callback(obj);
+            });
+        }
 
     },
 
@@ -60,22 +72,66 @@ Ext.define('SD.view.GitHubWrapper', {
     },
 
     explodeTree: function(files, del) {
-        var obj= this.processChildren(files, del);
-               return obj;
+         var obj= this.processChildren(files, del);
+         return obj;
     },
-
-    processChildren: function(files, del) {
-         var obj = this.dissectFiles(files, del);
+    processChildren: function(files, del) { 
+        if(SD.util.Launcher.diffType == "file") // code for converting html document to tree structure - changes Done by seema
+        {
+            var obj = [],child = [], node;
+            for ( var i=0;i<files.length;i++ ) {
+                
+                  node = files[i];
+                  if( node.name == SD.util.Launcher.repoDirName )
+                  {
+                      node = files[i];
+                      var nodename = node.name;//SD.view.util.StringCleaner.cleanup(node.path);
+                      var obj1 = [];
+                      obj1= this.preparingTreeFromHtml(SD.util.Launcher.metaData,obj1,nodename);
+                      var niceName = Ext.util.Format.capitalize(SD.view.util.StringCleaner.cleanup(node.name)); 
+                      node = {type: "tree",blobpath:node.name,path: node.name,leaf:false,text:niceName,children:obj1,expanded:true};
+                      obj.push(node);    
+                      break;
+                  }
+            }
+   
+        }else{
+        var obj = this.dissectFiles(files, del);
                obj = this.parseDirs(obj);
                    for ( var i=0;i<obj.length;i++ ) {
-                       var node = obj[i];
-                       if ( node.type === 'tree' ) {
-                           obj[i].children = this.processChildren(obj[i].children, del);
+                        var node = obj[i];
+                        if ( node.type === 'tree' ) {
+                               obj[i].children = this.processChildren(obj[i].children, del);
+                           }
                        }
-                   }
-                   return obj;
+        }
+       return obj;
     },
-
+    preparingTreeFromHtml : function(data,obj1,nodename) // Spliting data by <h2> </h2> tags for tree structure - changes Done by seema
+    {
+          data = data.trim();
+          if(data.length !=0)
+          {
+              var BeginIndex = data.indexOf("<h2>");
+              var endIndex = data.indexOf("</h2>");
+              var childNode = data.substring(BeginIndex+4,endIndex);
+              data = data.substring(endIndex,data.length);
+              BeginIndex = data.indexOf("</h2>");
+              if( data.indexOf("<h2>")!=-1 )
+              {
+                 endIndex = data.indexOf("<h2>");
+              }else{
+                 endIndex = data.length;
+              }
+              var displayText = data.substring(BeginIndex+5,endIndex);
+              childNode = SD.util.Launcher.htmlToString(childNode);
+              var node1 = {displayText : displayText,type:'tree',leaf:true,text:childNode,path:childNode,blobpath:nodename+"/"+childNode};
+              obj1.push(node1);
+              data = data.substring(endIndex,data.length);
+              this.preparingTreeFromHtml(data,obj1,nodename);
+          }
+          return obj1;
+    },
     dissectFiles: function(files, del) {
         var obj = [];
         var niceName = '';
@@ -100,7 +156,9 @@ Ext.define('SD.view.GitHubWrapper', {
                    return;
                }
 
-               niceName = SD.view.util.StringCleaner.cleanup(path);
+               niceName = SD.view.util.StringCleaner.cleanup(path); 
+                
+               
                node = {type: 'tree',path: path,text:niceName,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
            } else {
                var type='blob';
@@ -120,8 +178,8 @@ Ext.define('SD.view.GitHubWrapper', {
                if (SD.view.util.IgnoreListMgr.needToBeIgnored(text)) {
                    return;
                }
-
-               niceName = SD.view.util.StringCleaner.cleanup(text);
+                 niceName = SD.view.util.StringCleaner.cleanup(text);
+                
                node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:niceName,children:child,expanded:true};
            }
            obj.push(node);
