@@ -15,142 +15,202 @@
 
 Ext.define('SD.view.GitHubWrapper', {
     extend: 'Ext.Base',
-
     requires: [
         'SD.view.util.StringCleaner',
-        'SD.view.util.IgnoreListMgr'
+        'SD.view.util.IgnoreListMgr',
+        'SD.util.Launcher'
     ],
-
+    
     ignoreList: [
         'images'
     ],
+    
+    getTree: function (branchname, callback) {
+        var me = this;
+        var repo = SD.util.Launcher.getRepository();
 
-    getTree: function(branchname, callback) {
-        var me=this;
-        var repo=SD.util.Launcher.getRepository();
-        repo.getTree(branchname + '?recursive=true', function(err, tree) {
-             var obj=me.explodeTree(tree,'/');
-             me.data=tree;
-             callback(obj);
-        });
+        if (!Ext.isEmpty(SD.util.Launcher.inputType))
+        {
+            repo.read(branchname + '?recursive=true', SD.util.Launcher.repoDirName, function (err, tree) {
+                tree = eval(tree);
+                var obj = me.explodeTree(tree, '/');
+                me.data = tree;
+                callback(obj);
+            });
+
+        } else {
+            repo.getTree(branchname + '?recursive=true', function (err, tree) {
+                var obj = me.explodeTree(tree, '/');
+                me.data = tree;
+                callback(obj);
+            });
+        }
 
     },
-
-    getRepo: function(username, reponame) {
+    
+    getRepo: function (username, reponame) {
         this.repo = this.github.getRepo(username, reponame);
 
-        this.repo.show(function(err, repo) {
+        this.repo.show(function (err, repo) {
             console.log('REPO: ', err, repo);
 
         });
     },
-
-    getInstance: function(token) {
+    
+    getInstance: function (token) {
         this.github = new Github({
-          token: token,
-          auth: "oauth"
+            token: token,
+            auth: "oauth"
         });
 
         return this.github;
     },
-
-    getFileContent: function(branchname, path, cb) {
-        var repo=SD.util.Launcher.getRepository();
+    
+    getFileContent: function (branchname, path, cb) {
+        var repo = SD.util.Launcher.getRepository();
         repo.read(branchname, path, cb);
     },
-
-    explodeTree: function(files, del) {
-        var obj= this.processChildren(files, del);
-               return obj;
+    
+    explodeTree: function (files, del) {
+        var obj = this.processChildren(files, del);
+        return obj;
     },
+    
+    processChildren: function (files, del) {
+        if (!Ext.isEmpty(SD.util.Launcher.inputType))
+        {
+            var obj = [], child = [], node;
+            for (var i = 0; i < files.length; i++) {
 
-    processChildren: function(files, del) {
-         var obj = this.dissectFiles(files, del);
-               obj = this.parseDirs(obj);
-                   for ( var i=0;i<obj.length;i++ ) {
-                       var node = obj[i];
-                       if ( node.type === 'tree' ) {
-                           obj[i].children = this.processChildren(obj[i].children, del);
-                       }
-                   }
-                   return obj;
+                node = files[i];
+                if (node.name == SD.util.Launcher.inputType)
+                {
+                    node = files[i];
+                    var nodename = node.name;//SD.view.util.StringCleaner.cleanup(node.path);
+                    var obj1 = [];
+                    obj1 = this.preparingTreeFromHtml(SD.util.Launcher.metaData, obj1, nodename);
+                    var niceName = Ext.util.Format.capitalize(SD.view.util.StringCleaner.cleanup(node.name));
+                    node = {type: "tree", blobpath: node.name, path: node.name, leaf: false, text: niceName, children: obj1, expanded: true};
+                    obj.push(node);
+                    break;
+                }
+            }
+
+        } else {
+            var obj = this.dissectFiles(files, del);
+            obj = this.parseDirs(obj);
+            for (var i = 0; i < obj.length; i++) {
+                var node = obj[i];
+                if (node.type === 'tree') {
+                    obj[i].children = this.processChildren(obj[i].children, del);
+                }
+            }
+        }
+        return obj;
     },
-
-    dissectFiles: function(files, del) {
+    
+    preparingTreeFromHtml: function (data, obj1, nodename)
+    {
+        data = data.trim();
+        if (data.length != 0)
+        {
+            var BeginIndex = data.indexOf("<h2>");
+            var endIndex = data.indexOf("</h2>");
+            var childNode = data.substring(BeginIndex + 4, endIndex);
+            data = data.substring(endIndex, data.length);
+            BeginIndex = data.indexOf("</h2>");
+            if (data.indexOf("<h2>") != -1)
+            {
+                endIndex = data.indexOf("<h2>");
+            } else {
+                endIndex = data.length;
+            }
+            var displayText = data.substring(BeginIndex + 5, endIndex);
+            childNode = SD.util.Launcher.htmlToString(childNode);
+            var node1 = {displayText: displayText, type: 'tree', leaf: true, text: childNode, path: childNode, blobpath: nodename + "/" + childNode};
+            obj1.push(node1);
+            data = data.substring(endIndex, data.length);
+            this.preparingTreeFromHtml(data, obj1, nodename);
+        }
+        return obj1;
+    },
+    
+    dissectFiles: function (files, del) {
         var obj = [];
         var niceName = '';
 
         files.map(function (file) {
-           if(!file.blobpath){
-               file.blobpath=file.path;
-           }
+            if (!file.blobpath) {
+                file.blobpath = file.path;
+            }
 
-           var node,fileT,path;
-           if(file.split){
-               fileT = file.split(del);
-           }else{
-               if(file.path.split){
-                   fileT=file.path.split(del);
-               }
-           }
-           if ( fileT.length > 1 ) {
-               path = fileT.shift();
+            var node, fileT, path;
+            if (file.split) {
+                fileT = file.split(del);
+            } else {
+                if (file.path.split) {
+                    fileT = file.path.split(del);
+                }
+            }
+            if (fileT.length > 1) {
+                path = fileT.shift();
 
-               if (SD.view.util.IgnoreListMgr.needToBeIgnored(path)) {
-                   return;
-               }
+                if (SD.view.util.IgnoreListMgr.needToBeIgnored(path)) {
+                    return;
+                }
 
-               niceName = SD.view.util.StringCleaner.cleanup(path);
-               node = {type: 'tree',path: path,text:niceName,expanded:true,children: [{path:fileT.join(del),type:file.type,blobpath:file.blobpath}]};
-           } else {
-               var type='blob';
-               var text=fileT.join(del);
-               path=fileT.join(del);
-               var child=[];
-               var leaf=true;
-               if(file.type=="blob"){
-                   leaf=true;
-                   type='blob';
-               }
-               if(file.type=="tree"){
-                   leaf=false;
-                   type="tree";
-               }
+                niceName = SD.view.util.StringCleaner.cleanup(path);
 
-               if (SD.view.util.IgnoreListMgr.needToBeIgnored(text)) {
-                   return;
-               }
 
-               niceName = SD.view.util.StringCleaner.cleanup(text);
-               node = {type: type,blobpath:file.blobpath,path: path,leaf:leaf,text:niceName,children:child,expanded:true};
-           }
-           obj.push(node);
+                node = {type: 'tree', path: path, text: niceName, expanded: true, children: [{path: fileT.join(del), type: file.type, blobpath: file.blobpath}]};
+            } else {
+                var type = 'blob';
+                var text = fileT.join(del);
+                path = fileT.join(del);
+                var child = [];
+                var leaf = true;
+                if (file.type == "blob") {
+                    leaf = true;
+                    type = 'blob';
+                }
+                if (file.type == "tree") {
+                    leaf = false;
+                    type = "tree";
+                }
+
+                if (SD.view.util.IgnoreListMgr.needToBeIgnored(text)) {
+                    return;
+                }
+                niceName = SD.view.util.StringCleaner.cleanup(text);
+
+                node = {type: type, blobpath: file.blobpath, path: path, leaf: leaf, text: niceName, children: child, expanded: true};
+            }
+            obj.push(node);
         });
         return obj;
 
     },
-
-    parseDirs: function(obj) {
+    
+    parseDirs: function (obj) {
         var dirs = {};
-                   for ( var i=0;i<obj.length;i++ ) {
-                       var node = obj[i];
-                       var process = false;
-                       if ( node.type === 'tree' ) {
-                           var path = node.path;
-                           if ( dirs[path] === undefined ) {
-                               dirs[path] = i;
-                           } else {
-                               obj[dirs[path]].children = obj[dirs[path]].children.concat(obj[i].children);
-                               obj.splice(i,1);
-                               i--;
-                           }
-                       }
-                   }
-                   return obj;
+        for (var i = 0; i < obj.length; i++) {
+            var node = obj[i];
+            var process = false;
+            if (node.type === 'tree') {
+                var path = node.path;
+                if (dirs[path] === undefined) {
+                    dirs[path] = i;
+                } else {
+                    obj[dirs[path]].children = obj[dirs[path]].children.concat(obj[i].children);
+                    obj.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+        return obj;
     },
-
-    cleanupPathname: function(path) {
+    
+    cleanupPathname: function (path) {
         console.log('CLEANING UP..... ' + path);
     }
-
 });
