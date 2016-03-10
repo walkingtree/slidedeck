@@ -89,5 +89,14 @@ Ext.define('SD.util.Launcher', {
     
     getDirectoryName: function () {
         return this.repoDirName;
+    },
+    
+    firstKeywardCapital: function (str) {
+        var srtArray = Ext.String.splitWords(str);
+        str = '';
+        Ext.Array.each(srtArray, function (name) {
+            str = str + Ext.String.capitalize(name) + ' ';
+        });
+        return Ext.String.trim(str);
     }
 });

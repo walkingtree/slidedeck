@@ -89,7 +89,7 @@ Ext.define('SD.view.GitHubWrapper', {
                     var nodename = node.name;//SD.view.util.StringCleaner.cleanup(node.path);
                     var obj1 = [];
                     obj1 = this.preparingTreeFromHtml(SD.util.Launcher.metaData, obj1, nodename);
-                    var niceName = Ext.util.Format.capitalize(SD.view.util.StringCleaner.cleanup(node.name));
+                    var niceName = SD.util.Launcher.firstKeywardCapital(SD.view.util.StringCleaner.cleanup(node.name));
                     node = {type: "tree", blobpath: node.name, path: node.name, leaf: false, text: niceName, children: obj1, expanded: true};
                     obj.push(node);
                     break;
