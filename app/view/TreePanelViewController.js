@@ -197,7 +197,7 @@ Ext.define('SD.view.TreePanelViewController', {
             }
             //console.log(gitDirName + '  before loop');
 
-            for (var i = 0; i < tree.length; i++) {
+            /*for (var i = 0; i < tree.length; i++) {
                 console.log(tree[i]['path'] + '   ' + gitDirName);
 
                 if ((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === gitDirName)) {
@@ -205,7 +205,14 @@ Ext.define('SD.view.TreePanelViewController', {
                     console.log(i);
                     console.log(tree[i]['path']);
                 }
+            }*/
+            for (var i = 0; i < tree.length; i++) {
+                if ((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === gitDirName)) {
+                    tree[i].text = tree[i].text.replace(/mvvm/gi, 'MVVM');
+                    st.setRootNode(tree[i]);
+                }
             }
+            
             treePnl.collapseAll();
             if (treePnl.getRootNode().hasChildNodes()) {
                 treePnl.getRootNode().expand();
