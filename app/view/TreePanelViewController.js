@@ -209,6 +209,7 @@ Ext.define('SD.view.TreePanelViewController', {
             for (var i = 0; i < tree.length; i++) {
                 if ((!Ext.isEmpty(tree[i]['path'])) && (tree[i]['path'] === gitDirName)) {
                     tree[i].text = tree[i].text.replace(/mvvm/gi, 'MVVM');
+                    tree[i].text = tree[i].text.replace(/Extjs6/gi, 'Ext JS 6');
                     st.setRootNode(tree[i]);
                 }
             }
