@@ -18,7 +18,8 @@ Ext.define('SD.store.MenuStore', {
 
     requires: [
         'Ext.data.field.Field',
-        'Ext.util.Sorter'
+        'Ext.util.Sorter',
+        'SD.util.Launcher'
     ],
 
     constructor: function(cfg) {
@@ -36,7 +37,12 @@ Ext.define('SD.store.MenuStore', {
                 }
             ],
             sorters: {
-                sorterFn: function(first, second) {
+                sorterFn: function(first, second) {                    
+                    if (!Ext.isEmpty(SD.util.Launcher.inputType)) {
+                        if (SD.util.Launcher.inputType.split('.')[1] === "md") {
+                            return;
+                        }
+                    }                    
                     var num1 = new Number(first.data.text.split('.')[0]),
                         num2 = new Number(second.data.text.split('.')[0]);
                 
