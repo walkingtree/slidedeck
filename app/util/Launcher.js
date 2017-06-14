@@ -42,7 +42,7 @@ Ext.define('SD.util.Launcher',{
         if (Ext.isDefined(dirName)) {
             this.repoDirName = dirName;
         } else {
-            this.repoDirName = 'Enterprise-App-Development-with-AngularJS'; /*To Launch slidedeck stand alone*/
+            this.repoDirName = 'Enterprise-App-Development-with-Angular'; /*To Launch slidedeck stand alone*/
         }
         
 

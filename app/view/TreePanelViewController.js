@@ -78,8 +78,7 @@ Ext.define('SD.view.TreePanelViewController', {
             path = path.replace(/\?/g, "%3F");
 
             //TODO: This needs cleanup. We need to get rid of the user name in the pen
-            var html = "<iframe height='268' scrolling='no' src='http://codepen.io/walkingtree/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walkingtree (<a href='http://codepen.io/walkingtree'>@walkingtree</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
-            var tpl =  Ext.dom.Helper.createTemplate(html);
+            
             ghUtil.getFileContent('master', path, function(err, data) {
 
                 var el = Ext.dom.Helper.createDom(data);
@@ -90,11 +89,24 @@ Ext.define('SD.view.TreePanelViewController', {
                 Ext.getCmp('content-pnl').addCls('markdown-body');
 
                 //TODO: This needs ceanup. We need to get rid of the user name in the pen
-                var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/walkingtree/pen]');
-                for (var i = 0; i < elArr.length; i++) {
-                    el = elArr[i];
-                    tpl.overwrite(Ext.get(el).parent(), {hash: Ext.get(el).getAttribute('text')});
+                var elArr = Ext.dom.Query.select('a[href*=http://codepen.io/walkingtree/pen]'),html,tpl;
+                if( elArr.length ==0){
+                     html = '<iframe src="{hash}" frameborder="0" width="100%" height="400px" >&nbsp;</iframe>';
+                     tpl =  Ext.dom.Helper.createTemplate(html);
+                     elArr = Ext.dom.Query.select('a[href*=https://embed.plnkr.co]');
+
+                }else{
+                     html = "<iframe height='268' scrolling='no' src='http://codepen.io/walkingtree/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walkingtree (<a href='http://codepen.io/walkingtree'>@walkingtree</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
+                     tpl =  Ext.dom.Helper.createTemplate(html);
                 }
+                if( elArr.length ){
+                    
+                    for (var i = 0; i < elArr.length; i++) {
+                        el = elArr[i];
+                        tpl.overwrite(Ext.get(el), {hash: Ext.get(el).getAttribute('text')});
+                    }
+                }
+                
                 Ext.getCmp('content-pnl').unmask();
             });
 
@@ -107,10 +119,10 @@ Ext.define('SD.view.TreePanelViewController', {
             //It is a parent node...just create a dummy slide content from the node text
 
             //TODO: Make this configurable
-            var html = '<div class="topic"><div class="head"><h1>' + record.data.text + '</h1></div><div class="footer">' +
-                '2008 &minus; ' + this.getCurrentYear() + ' Walking Tree Consultancy Services Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
+            var html = '<div class="topic"><div class="head"><div class="headlogo"></div> <h1>' + record.data.text + '</h1></div><div class="footer">' +
+                '2008 &minus; ' + this.getCurrentYear() + ' Walking Tree Technologies Pvt. Ltd. All rights reserved. This document is provided for the sole use of a named ' +
                 'participant in a technical training course.  Any other use or reproduction of this document is ' +
-                'unlawful without the express written consent of Walking Tree Consultancy Services Pvt. Ltd.</div></div>';
+                'unlawful without the express written consent of Walking Tree Technologies Pvt. Ltd.</div></div>';
             Ext.getCmp('content-pnl').setHtml(html);
 
         }

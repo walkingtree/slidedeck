@@ -121,7 +121,7 @@
 }
 
 .topic .head {
-    background: url("http://walkingtree.in/images/wtclogo.png") no-repeat 50% 20%;
+    // background: url("./resources/images/wtclogotam.png") no-repeat 50% 20%;
     color: #fff;
     font-family: 'SansBold',helvetica,arial,verdana,sans-serif;
     text-shadow: #000 2px 1px 5px;
@@ -130,11 +130,17 @@
     height: 200px;
     width: 100%;
 }
-
+.topic .head .headlogo{
+  margin: auto;
+    border: 0px;
+    background-size: 100% 100%;
+    width: 200px;
+    background-image: url(./resources/images/wtclogotamheader.png);
+    height: 200px;
+}
 .topic .head h1 {
     font-size: 45px;
     font-weight: 300;
-    margin: 200px 0 0 0;
     border-bottom: none !important;
 }
 
@@ -161,14 +167,14 @@ div.slide.head h3 {
 }
 
 div.slide.head .logo {
-    background: url("http://walkingtree.in/images/wtclogo.png") no-repeat;
-    background-size: 100px;
+    background: url("./resources/images/wtclogotam.png") no-repeat;
+    background-size: 100% 100%;
     width: 100px;
-    opacity: .4;
+    
     position: absolute;
-    top: 25px;
+    top: 0px;
     right: 35px;
-    height: 75px;
+    height: 100px;
 }
 /************Styles for the markdown files ********************************************************/
 
