@@ -96,7 +96,8 @@ Ext.define('SD.view.TreePanelViewController', {
                      elArr = Ext.dom.Query.select('a[href*=https://embed.plnkr.co]');
 
                 }else{
-                     html = "<iframe height='268' scrolling='no' src='http://codepen.io/walkingtree/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walkingtree (<a href='http://codepen.io/walkingtree'>@walkingtree</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";
+                    /*html = "<iframe height='268' scrolling='no' src='http://codepen.io/walkingtree/embed/{hash}/?height=268&theme-id=0' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 800px;'>See the Pen <a href='http://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walkingtree (<a href='http://codepen.io/walkingtree'>@walkingtree</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>";*/
+                     html = "<iframe height='400' scrolling='no' title='CodePenTest' src='//codepen.io/walkingtree/embed/{hash}/?height=400&theme-id=0&default-tab=html,result&embed-version=2&editable=true' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; padding-right:10px; padding-left:10px;'>See the Pen <a href='https://codepen.io/walkingtree/pen/{hash}/'>{hash}</a> by Walking Tree Technologies Pvt. Ltd. (<a href='https://codepen.io/walkingtree'>@walkingtree</a>) on <a href='https://codepen.io'>CodePen</a>.</iframe>";
                      tpl =  Ext.dom.Helper.createTemplate(html);
                 }
                 if( elArr.length ){
